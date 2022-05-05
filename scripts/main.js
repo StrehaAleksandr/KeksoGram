@@ -3,6 +3,8 @@
 var MAX_COMMETS = 10;
 var MIN_LIKES = 15;
 var MAX_LIKES = 200;
+var All_PHOTOS = 25;
+
 var ALL_COMMETS = [
     "Всё отлично!",
     "В целом всё неплохо. Но не всё.",
@@ -11,6 +13,7 @@ var ALL_COMMETS = [
     "Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.",
     "Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!"
 ];
+
 var USER_NAMES = [
     "Артём",
     "Женя",
@@ -20,7 +23,8 @@ var USER_NAMES = [
     "Александр",
     "Настя",
     "Кирилл"
-]
+];
+
 var USER_AVATARS = [
     "img/avatar-1.svg",
     "img/avatar-2.svg",
@@ -28,7 +32,8 @@ var USER_AVATARS = [
     "img/avatar-4.svg",
     "img/avatar-5.svg",
     "img/avatar-6.svg"
-]
+];
+
 var ALL_DESCRPTIONS = [
     "Тестим новую камеру!",
     "Затусили с друзьями на море",
@@ -36,64 +41,43 @@ var ALL_DESCRPTIONS = [
     "Отдыхаем...",
     "Цените каждое мгновенье. Цените тех, кто рядом с вами и отгоняйте все сомненья. Не обижайте всех словами......",
     "Вот это тачка!"
-]
+];
 
 var allImage = [];
+var template = document.querySelector('#picture');
+var pictures = document.querySelector('.pictures');
 
 function getRandomNumber(min, max) {
-    return Math.floor(min + Math.random() * (max + 1 - min))
+    return Math.floor(min + Math.random() * (max - min))
 }
 
-function getUserName(index) {
-    if (index === USER_NAMES.length) {
-        index--;
-    }
-    return USER_NAMES[index];
-}
-
-function getRandomComment(index) {
-    if (index === ALL_COMMETS.length) {
-        index--;
-    }
-    return ALL_COMMETS[index];
-}
-
-function getUserAvatar(index) {
-    if (index === USER_AVATARS.length) {
-        index--;
-    }
-    return USER_AVATARS[index];
-}
-
-function getPhotoDescription(index) {
-    if (index === ALL_DESCRPTIONS.length) {
-        index--;
-    }
-    return ALL_DESCRPTIONS[index];
+function getArrayElement(index, array) {
+    return array[index];
 }
 
 function getCommentsData() {
     var userCommets = [];
-    var count = getRandomNumber(0, MAX_COMMETS);
+    var count = getRandomNumber(0, (MAX_COMMETS + 1));
 
     for (var i = 0; i < count; i++) {
         userCommets[i] = {
-            avatar: getUserAvatar(getRandomNumber(0, USER_AVATARS.length)),
-            message: getRandomComment(getRandomNumber(0, ALL_COMMETS.length)),
-            name: getUserName(getRandomNumber(0, USER_NAMES.length))
+            avatar: getArrayElement(getRandomNumber(0, USER_AVATARS.length), USER_AVATARS),
+            message: getArrayElement(getRandomNumber(0, ALL_COMMETS.length), ALL_COMMETS),
+            name: getArrayElement(getRandomNumber(0, USER_NAMES.length), USER_NAMES)
         }
     }
 
     return userCommets;
 }
 
-for (var i = 0; i < 25; i++) {
+for (var i = 0; i < All_PHOTOS; i++) {
     allImage[i] = {
         url: "photos/" + (i + 1) + ".jpg",
-        likes: getRandomNumber(MIN_LIKES, MAX_LIKES),
+        likes: getRandomNumber(MIN_LIKES, (MAX_LIKES + 1)),
         comments: getCommentsData(),
-        description: getPhotoDescription(getRandomNumber(0, ALL_DESCRPTIONS.length))
+        description: getArrayElement(getRandomNumber(0, ALL_DESCRPTIONS.length), ALL_DESCRPTIONS)
     }
 }
+
 
 console.log(allImage);
