@@ -51,19 +51,15 @@ function getRandomNumber(min, max) {
     return Math.floor(min + Math.random() * (max - min))
 }
 
-function getArrayElement(index, array) {
-    return array[index];
-}
-
 function getCommentsData() {
     var userCommets = [];
     var count = getRandomNumber(0, (MAX_COMMETS + 1));
 
     for (var i = 0; i < count; i++) {
         userCommets[i] = {
-            avatar: getArrayElement(getRandomNumber(0, USER_AVATARS.length), USER_AVATARS),
-            message: getArrayElement(getRandomNumber(0, ALL_COMMETS.length), ALL_COMMETS),
-            name: getArrayElement(getRandomNumber(0, USER_NAMES.length), USER_NAMES)
+            avatar: USER_AVATARS[getRandomNumber(0, USER_AVATARS.length)],
+            message: ALL_COMMETS[getRandomNumber(0, ALL_COMMETS.length)],
+            name: USER_NAMES[getRandomNumber(0, USER_NAMES.length)]
         }
     }
 
@@ -75,9 +71,20 @@ for (var i = 0; i < All_PHOTOS; i++) {
         url: "photos/" + (i + 1) + ".jpg",
         likes: getRandomNumber(MIN_LIKES, (MAX_LIKES + 1)),
         comments: getCommentsData(),
-        description: getArrayElement(getRandomNumber(0, ALL_DESCRPTIONS.length), ALL_DESCRPTIONS)
+        description: ALL_DESCRPTIONS[getRandomNumber(0, ALL_DESCRPTIONS.length)]
     }
-}
 
+    
+    var clone = template.content.cloneNode(true);
+    var image = clone.querySelector('.picture__img');
+    var pictureLikes = clone.querySelector('.picture__likes');
+    var pictureComments = clone.querySelector('.picture__comments');
+
+    image.src = allImage[i].url;
+    pictureLikes.textContent = allImage[i].likes;
+    pictureComments.textContent = allImage[i].comments.length;
+
+    pictures.appendChild(clone);
+}
 
 console.log(allImage);
