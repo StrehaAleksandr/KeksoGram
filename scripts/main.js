@@ -1,11 +1,11 @@
 'use strict'
 
-var MAX_COMMETS = 10;
+var MAX_COMMENTS = 10;
 var MIN_LIKES = 15;
 var MAX_LIKES = 200;
-var All_PHOTOS = 25;
+var All_PHOTOS_COUNT = 25;
 
-var ALL_COMMETS = [
+var ALL_COMMENTS = [
     "Всё отлично!",
     "В целом всё неплохо. Но не всё.",
     "Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.",
@@ -53,12 +53,12 @@ function getRandomNumber(min, max) {
 
 function getCommentsData() {
     var userCommets = [];
-    var count = getRandomNumber(0, (MAX_COMMETS + 1));
+    var count = getRandomNumber(0, (MAX_COMMENTS + 1));
 
     for (var i = 0; i < count; i++) {
         userCommets[i] = {
             avatar: USER_AVATARS[getRandomNumber(0, USER_AVATARS.length)],
-            message: ALL_COMMETS[getRandomNumber(0, ALL_COMMETS.length)],
+            message: ALL_COMMENTS[getRandomNumber(0, ALL_COMMENTS.length)],
             name: USER_NAMES[getRandomNumber(0, USER_NAMES.length)]
         }
     }
@@ -66,7 +66,7 @@ function getCommentsData() {
     return userCommets;
 }
 
-for (var i = 0; i < All_PHOTOS; i++) {
+for (var i = 0; i < All_PHOTOS_COUNT; i++) {
     allImage[i] = {
         url: "photos/" + (i + 1) + ".jpg",
         likes: getRandomNumber(MIN_LIKES, (MAX_LIKES + 1)),
@@ -75,7 +75,7 @@ for (var i = 0; i < All_PHOTOS; i++) {
     }
 }
 
-for (var i = 0; i < All_PHOTOS; i++) {
+for (var i = 0; i < All_PHOTOS_COUNT; i++) {
     var cloneImageTemplate = imageTemplate.cloneNode(true);
 
     cloneImageTemplate.querySelector('.picture__img').src = allImage[i].url;
