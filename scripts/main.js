@@ -75,13 +75,10 @@ for (var i = 0; i < All_PHOTOS; i++) {
     }
 
     var cloneImageTemplate = imageTemplate.cloneNode(true);
-    var image = cloneImageTemplate.querySelector('.picture__img');
-    var pictureLikes = cloneImageTemplate.querySelector('.picture__likes');
-    var pictureComments = cloneImageTemplate.querySelector('.picture__comments');
 
-    image.src = allImage[i].url;
-    pictureLikes.textContent = allImage[i].likes;
-    pictureComments.textContent = allImage[i].comments.length;
+    cloneImageTemplate.querySelector('.picture__img').src = allImage[i].url;
+    cloneImageTemplate.querySelector('.picture__likes').textContent = allImage[i].likes;
+    cloneImageTemplate.querySelector('.picture__comments').textContent = allImage[i].comments.length;
 
     pictures.appendChild(cloneImageTemplate);
 }
@@ -101,10 +98,6 @@ function initPicture(index) {
     function onPictureClick(evt) {
         evt.preventDefault();
     
-        var bigView = bigPicture.querySelector('.big-picture__img img');
-        var likeCount = bigPicture.querySelector('.likes-count');
-        var commentsCount = bigPicture.querySelector('.comments-count');
-        var socialCaption = bigPicture.querySelector('.social__caption');
         var commentList = bigPicture.querySelector('.social__comments');
 
         while (commentList.firstChild) {
@@ -122,10 +115,10 @@ function initPicture(index) {
             commentList.appendChild(userComment);
         }
 
-        bigView.src = allImage[index].url;
-        likeCount.textContent = allImage[index].likes;
-        commentsCount.textContent = allImage[index].comments.length;
-        socialCaption.textContent = allImage[index].description;
+        bigPicture.querySelector('.big-picture__img img').src = allImage[index].url;
+        bigPicture.querySelector('.likes-count').textContent = allImage[index].likes;
+        bigPicture.querySelector('.comments-count').textContent = allImage[index].comments.length;
+        bigPicture.querySelector('.social__caption').textContent = allImage[index].description;
     
         bigPicture.classList.remove('hidden');
         socialCommentCount.classList.add('visually-hidden');
