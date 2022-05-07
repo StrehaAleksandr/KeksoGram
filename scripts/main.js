@@ -125,7 +125,7 @@ function initPicture(index) {
             commentList.appendChild(userComment);
         }
 
-        bigView.src = './' + allImage[index].url;
+        bigView.src = allImage[index].url;
         likeCount.textContent = allImage[index].likes;
         commentsCount.textContent = allImage[index].comments.length;
         socialCaption.textContent = allImage[index].description;
