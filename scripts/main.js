@@ -73,7 +73,9 @@ for (var i = 0; i < All_PHOTOS; i++) {
         comments: getCommentsData(),
         description: ALL_DESCRPTIONS[getRandomNumber(0, ALL_DESCRPTIONS.length)]
     }
+}
 
+for (var i = 0; i < All_PHOTOS; i++) {
     var cloneImageTemplate = imageTemplate.cloneNode(true);
 
     cloneImageTemplate.querySelector('.picture__img').src = allImage[i].url;
