@@ -44,11 +44,11 @@ var ALL_DESCRPTIONS = [
 ];
 
 var allImage = [];
-var template = document.querySelector('#picture');
+var imageTemplate = document.querySelector('#picture').content.querySelector('.picture');
 var pictures = document.querySelector('.pictures'); 
 
 function getRandomNumber(min, max) {
-    return Math.floor(min + Math.random() * (max - min))
+    return Math.floor(min + Math.random() * (max - min));
 }
 
 function getCommentsData() {
@@ -74,17 +74,16 @@ for (var i = 0; i < All_PHOTOS; i++) {
         description: ALL_DESCRPTIONS[getRandomNumber(0, ALL_DESCRPTIONS.length)]
     }
 
-    
-    var cloneTemplate = template.content.cloneNode(true);
-    var image = cloneTemplate.querySelector('.picture__img');
-    var pictureLikes = cloneTemplate.querySelector('.picture__likes');
-    var pictureComments = cloneTemplate.querySelector('.picture__comments');
+    var cloneImageTemplate = imageTemplate.cloneNode(true);
+    var image = cloneImageTemplate.querySelector('.picture__img');
+    var pictureLikes = cloneImageTemplate.querySelector('.picture__likes');
+    var pictureComments = cloneImageTemplate.querySelector('.picture__comments');
 
     image.src = allImage[i].url;
     pictureLikes.textContent = allImage[i].likes;
     pictureComments.textContent = allImage[i].comments.length;
 
-    pictures.appendChild(cloneTemplate);
+    pictures.appendChild(cloneImageTemplate);
 }
 
 var bigPicture = document.querySelector('.big-picture');
@@ -97,8 +96,6 @@ bigViewClose.addEventListener('click', function(evt) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
 })
-
-
 
 function initPicture(index) {
     function onPictureClick(evt) {
@@ -135,7 +132,7 @@ function initPicture(index) {
         commentLoader.classList.add('visually-hidden');
     }
 
-    allPictures[i].addEventListener('click', onPictureClick)
+    allPictures[i].addEventListener('click', onPictureClick);
 }
 
 for (var i = 0; i < allPictures.length; i++) {
