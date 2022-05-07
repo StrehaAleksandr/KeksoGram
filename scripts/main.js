@@ -4,6 +4,7 @@ var MAX_COMMENTS = 10;
 var MIN_LIKES = 15;
 var MAX_LIKES = 200;
 var All_PHOTOS_COUNT = 25;
+var COMMENT_STEP = 5;
 
 var ALL_COMMENTS = [
     "Всё отлично!",
@@ -112,7 +113,7 @@ function initPicture(index) {
 
         var commentFragment = document.createDocumentFragment();
         
-        for (var i = 0; i < allImage[index].comments.length; i++) {
+        for (var i = 0; i < Math.min(allImage[index].comments.length, COMMENT_STEP); i++) {
             var userComment = document.createElement('li');
             userComment.classList.add('social__comment');
             userComment.innerHTML = '<img class="social__picture" src="#" alt="Аватар комментатора фотографии" width="35" height="35"> <p class="social__text"></p>';
