@@ -12,66 +12,83 @@ var imageEffectPhobosButton = document.querySelector('#effect-phobos');
 var imageEffectHeatButton = document.querySelector('#effect-heat');
 
 function imageEffectNoneFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--chrome', 'effects__preview--sepia','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
-    uploadingImage.querySelector('img').classList.add('effects__preview--none');
+    uploadingImage.classList.remove('effects__preview--chrome', 'effects__preview--sepia','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
+    uploadingImage.classList.add('effects__preview--none');
 }
 
 function imageEffectChromeFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--none', 'effects__preview--sepia','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
-    uploadingImage.querySelector('img').classList.add('effects__preview--chrome');
+    uploadingImage.classList.remove('effects__preview--none', 'effects__preview--sepia','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
+    uploadingImage.classList.add('effects__preview--chrome');
 }
 
 function imageEffectSepiaFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
-    uploadingImage.querySelector('img').classList.add('effects__preview--sepia');
+    uploadingImage.classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--marvin', 'effects__preview--phobos', 'effects__preview--heat');
+    uploadingImage.classList.add('effects__preview--sepia');
 }
 
 function imageEffectMarvinFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--phobos', 'effects__preview--heat');
-    uploadingImage.querySelector('img').classList.add('effects__preview--marvin');
+    uploadingImage.classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--phobos', 'effects__preview--heat');
+    uploadingImage.classList.add('effects__preview--marvin');
 }
 
 function imageEffectPhobosFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--heat');
-    uploadingImage.querySelector('img').classList.add('effects__preview--phobos');
+    uploadingImage.classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--heat');
+    uploadingImage.classList.add('effects__preview--phobos');
 }
 
 function imageEffectHeatFunction() {
-    uploadingImage.querySelector('img').classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos');
-    uploadingImage.querySelector('img').classList.add('effects__preview--heat');
+    uploadingImage.classList.remove('effects__preview--chrome', 'effects__preview--none','effects__preview--sepia', 'effects__preview--marvin', 'effects__preview--phobos');
+    uploadingImage.classList.add('effects__preview--heat');
 }
 
 function onViewImageChangeForm(evt) {
     evt.preventDefault();
     imageChangeForm.classList.remove('hidden');
 
-    imageEffectNoneButton.addEventListener('click', imageEffectNoneFunction)
-    
-    imageEffectChromeButton.addEventListener('click', imageEffectChromeFunction)
+    var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
+    var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
+    var scaleImageControlValue = document.querySelector('.scale__control--value');
 
-    imageEffectSepiaButton.addEventListener('click', imageEffectSepiaFunction)
+    scaleImageControlValue.value = '100%';
+    var scaleImageValue = scaleImageControlValue.value.replace('%', "");
 
-    imageEffectMarvinButton.addEventListener('click', imageEffectMarvinFunction)
+    scaleImageSmallerButton.addEventListener('click', function(evt) {
+        evt.preventDefault();
+        
+        if (scaleImageValue > 25) {
+            scaleImageValue = scaleImageValue - 25;
+            scaleImageControlValue.value = scaleImageValue + '%';
+            uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
+        }
+    })
 
-    imageEffectPhobosButton.addEventListener('click', imageEffectPhobosFunction)
+    scaleImageBiggerButton.addEventListener('click', function(evt) {
+        evt.preventDefault();
 
-    imageEffectHeatButton.addEventListener('click', imageEffectHeatFunction)
+        if (scaleImageValue < 100) {
+            scaleImageValue = scaleImageValue + 25;
+            scaleImageControlValue.value = scaleImageValue + '%';
+            uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
+        }
+    })
+
+    imageEffectNoneButton.addEventListener('click', imageEffectNoneFunction);    
+    imageEffectChromeButton.addEventListener('click', imageEffectChromeFunction);
+    imageEffectSepiaButton.addEventListener('click', imageEffectSepiaFunction);
+    imageEffectMarvinButton.addEventListener('click', imageEffectMarvinFunction);
+    imageEffectPhobosButton.addEventListener('click', imageEffectPhobosFunction);
+    imageEffectHeatButton.addEventListener('click', imageEffectHeatFunction);
 }
 
 function onHiddenImageChangeForm(evt) {
     evt.preventDefault();
 
-    imageEffectNoneButton.removeEventListener('click', imageEffectNoneFunction)
-    
-    imageEffectChromeButton.removeEventListener('click', imageEffectChromeFunction)
-
-    imageEffectSepiaButton.removeEventListener('click', imageEffectSepiaFunction)
-
-    imageEffectMarvinButton.removeEventListener('click', imageEffectMarvinFunction)
-
-    imageEffectPhobosButton.removeEventListener('click', imageEffectPhobosFunction)
-
-    imageEffectHeatButton.removeEventListener('click', imageEffectHeatFunction)
+    imageEffectNoneButton.removeEventListener('click', imageEffectNoneFunction);    
+    imageEffectChromeButton.removeEventListener('click', imageEffectChromeFunction);
+    imageEffectSepiaButton.removeEventListener('click', imageEffectSepiaFunction);
+    imageEffectMarvinButton.removeEventListener('click', imageEffectMarvinFunction);
+    imageEffectPhobosButton.removeEventListener('click', imageEffectPhobosFunction);
+    imageEffectHeatButton.removeEventListener('click', imageEffectHeatFunction);
 
     imageChangeForm.classList.add('hidden');
 }
