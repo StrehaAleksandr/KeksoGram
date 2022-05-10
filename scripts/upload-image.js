@@ -1,7 +1,9 @@
 var uploadImageButton = document.querySelector('#upload-file');
 var imageChangeForm = document.querySelector('.img-upload__overlay');
 var uploadImageCancel = document.querySelector('#upload-cancel');
+
 var uploadingImage = document.querySelector('.img-upload__preview');
+
 var imageEffectNoneButton = document.querySelector('#effect-none');
 var imageEffectChromeButton = document.querySelector('#effect-chrome');
 var imageEffectSepiaButton = document.querySelector('#effect-sepia');
