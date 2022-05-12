@@ -41,36 +41,37 @@ function imageEffectHeatFunction() {
     uploadingImage.classList.add('effects__preview--heat');
 }
 
+var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
+var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
+
+var scaleImageControlValue = document.querySelector('.scale__control--value');
+var scaleImageValue = 100;
+
+function onScaleImageSmallerClick(evt) {
+    evt.preventDefault();
+
+    if (scaleImageValue > 25) {
+        scaleImageValue = scaleImageValue - 25;
+        scaleImageControlValue.value = scaleImageValue + '%';
+        uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
+    }     
+}
+
+function onScaleImageBiggerClick(evt) {
+    evt.preventDefault();
+    
+    if (scaleImageValue < 100) {
+        scaleImageValue = scaleImageValue + 25;
+        scaleImageControlValue.value = scaleImageValue + '%';
+        uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
+    }
+}
+
 function onViewImageChangeForm(evt) {
     evt.preventDefault();
-    imageChangeForm.classList.remove('hidden');
+    imageChangeForm.classList.remove('hidden'); 
 
-    var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
-    var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
-    var scaleImageControlValue = document.querySelector('.scale__control--value');
-
-    scaleImageControlValue.value = '100%';
-    var scaleImageValue = scaleImageControlValue.value.replace('%', "");
-
-    function onScaleImageSmallerClick(evt) {
-        evt.preventDefault();
-
-        if (scaleImageValue > 25) {
-            scaleImageValue = scaleImageValue - 25;
-            scaleImageControlValue.value = scaleImageValue + '%';
-            uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
-        }     
-    }
-
-    function onScaleImageBiggerClick(evt) {
-        evt.preventDefault();
-        
-        if (scaleImageValue < 100) {
-            scaleImageValue = scaleImageValue + 25;
-            scaleImageControlValue.value = scaleImageValue + '%';
-            uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
-        }
-    }
+    scaleImageControlValue.value = '100%';    
 
     scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick)
     scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick)
