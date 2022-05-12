@@ -5,12 +5,68 @@ var uploadImageCancel = document.querySelector('#upload-cancel');
 var uploadingImage = document.querySelector('.img-upload__preview');
 var imageEffects = document.querySelectorAll('.effects__radio');
 
+var effectLine = document.querySelector('.effect-level__line');
+var effectPin = document.querySelector('.effect-level__pin');
+var effectDepth = document.querySelector('.effect-level__depth');
+var effectValue = document.querySelector('.effect-level__value');
+var pinLeftCoord;
+
+
+effectPin.addEventListener('mousedown', function(evt) {
+    evt.preventDefault();
+
+    var startCoords = {
+        x: evt.clientX
+    }
+
+    var onMouseMove = function(moveEvt) {
+        moveEvt.preventDefault();
+
+        var shift = {
+            x: startCoords.x - moveEvt.clientX
+        }
+
+        startCoords = {
+            x: moveEvt.clientX
+        }
+
+        pinLeftCoord = effectPin.offsetLeft - shift.x;
+
+        if (pinLeftCoord < 0) {
+            pinLeftCoord = 0;
+        }
+
+        if (pinLeftCoord > effectLine.offsetWidth) {
+            pinLeftCoord = effectLine.offsetWidth;
+        }
+
+        effectPin.style.left = pinLeftCoord + 'px';
+        effectDepth.style.width = pinLeftCoord + 'px';
+    }
+
+    var onMouseUp = function(upEvt) {
+        upEvt.preventDefault();
+
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+})
+
 function viewEffect(index) {
     function effect() {
         for (var i = 0; i < imageEffects.length; i++) {
             uploadingImage.classList.remove('effects__preview--' + imageEffects[i].value);
         }
         uploadingImage.classList.add('effects__preview--' + imageEffects[index].value);
+        if (imageEffects[index].value === 'none') {
+            document.querySelector('.img-upload__effect-level').classList.add('hidden');
+        }
+        else {
+            document.querySelector('.img-upload__effect-level').classList.remove('hidden');
+        }
     }
     imageEffects[index].addEventListener('click', effect);
 }
@@ -43,8 +99,12 @@ function onScaleImageBiggerClick(evt) {
 
 function onUploadImageInputChange(evt) {
     evt.preventDefault();
-    imageChangeForm.classList.remove('hidden'); 
+    imageChangeForm.classList.remove('hidden');
 
+    var effectLineSize = effectLine.getBoundingClientRect();
+
+    // document.querySelector('.img-upload__effect-level').classList.add('hidden');
+    
     scaleImageControlValue.value = scaleImageValue + '%';    
 
     scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick)
