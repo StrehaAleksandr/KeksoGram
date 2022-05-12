@@ -71,7 +71,7 @@ function onViewImageChangeForm(evt) {
     evt.preventDefault();
     imageChangeForm.classList.remove('hidden'); 
 
-    scaleImageControlValue.value = '100%';    
+    scaleImageControlValue.value = scaleImageValue + '%';    
 
     scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick)
     scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick)
