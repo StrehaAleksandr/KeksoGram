@@ -52,25 +52,28 @@ function onViewImageChangeForm(evt) {
     scaleImageControlValue.value = '100%';
     var scaleImageValue = scaleImageControlValue.value.replace('%', "");
 
-    scaleImageSmallerButton.addEventListener('click', function(evt) {
+    function onScaleImageSmallerClick(evt) {
         evt.preventDefault();
-        
+
         if (scaleImageValue > 25) {
             scaleImageValue = scaleImageValue - 25;
             scaleImageControlValue.value = scaleImageValue + '%';
             uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
-        }
-    })
+        }     
+    }
 
-    scaleImageBiggerButton.addEventListener('click', function(evt) {
+    function onScaleImageBiggerClick(evt) {
         evt.preventDefault();
-
+        
         if (scaleImageValue < 100) {
             scaleImageValue = scaleImageValue + 25;
             scaleImageControlValue.value = scaleImageValue + '%';
             uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
         }
-    })
+    }
+
+    scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick)
+    scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick)
 
     imageEffectNoneButton.addEventListener('click', imageEffectNoneFunction);    
     imageEffectChromeButton.addEventListener('click', imageEffectChromeFunction);
@@ -82,6 +85,9 @@ function onViewImageChangeForm(evt) {
 
 function onHiddenImageChangeForm(evt) {
     evt.preventDefault();
+
+    scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick)
+    scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick)
 
     imageEffectNoneButton.removeEventListener('click', imageEffectNoneFunction);    
     imageEffectChromeButton.removeEventListener('click', imageEffectChromeFunction);
