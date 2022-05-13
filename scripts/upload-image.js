@@ -1,3 +1,48 @@
+var Effect = {
+    none: {
+        name: 'none',
+        filter: 'none',
+        minValue: 0,
+        maxValue: 0,
+        measure: ''
+    },
+    chrome: {
+        name: 'chrome',
+        filter: 'grayscale',
+        minValue: 0,
+        maxValue: 1,
+        measure: ''
+    },
+    sepia: {
+        name: 'sepia',
+        filter: 'sepia',
+        minValue: 0,
+        maxValue: 1,
+        measure: ''
+    },
+    marvin: {
+        name: 'marvin',
+        filter: 'invert',
+        minValue: 0,
+        maxValue: 100,
+        measure: '%'
+    },
+    phobos: {
+        name: 'phobos',
+        filter: 'blur',
+        minValue: 0,
+        maxValue: 3,
+        measure: 'px'
+    },
+    heat: {
+        name: 'heat',
+        filter: 'brightness',
+        minValue: 1,
+        maxValue: 3,
+        measure: ''
+    }
+}
+
 var uploadImageInput = document.querySelector('#upload-file');
 var imageChangeForm = document.querySelector('.img-upload__overlay');
 var uploadImageCancel = document.querySelector('#upload-cancel');
@@ -11,6 +56,7 @@ var effectDepth = document.querySelector('.effect-level__depth');
 var effectValue = document.querySelector('.effect-level__value');
 var pinLeftCoord;
 
+var currentEffect = Effect.none;
 
 effectPin.addEventListener('mousedown', function(evt) {
     evt.preventDefault();
@@ -42,6 +88,7 @@ effectPin.addEventListener('mousedown', function(evt) {
 
         effectPin.style.left = pinLeftCoord + 'px';
         effectDepth.style.width = pinLeftCoord + 'px';
+        effectValue.value = pinLeftCoord * 100 / effectLine.offsetWidth;
     }
 
     var onMouseUp = function(upEvt) {
@@ -57,10 +104,8 @@ effectPin.addEventListener('mousedown', function(evt) {
 
 function viewEffect(index) {
     function effect() {
-        for (var i = 0; i < imageEffects.length; i++) {
-            uploadingImage.classList.remove('effects__preview--' + imageEffects[i].value);
-        }
-        uploadingImage.classList.add('effects__preview--' + imageEffects[index].value);
+        uploadingImage.className = 'img-upload__preview effects__preview--' + imageEffects[index].value;
+
         if (imageEffects[index].value === 'none') {
             document.querySelector('.img-upload__effect-level').classList.add('hidden');
         }
@@ -103,7 +148,7 @@ function onUploadImageInputChange(evt) {
 
     var effectLineSize = effectLine.getBoundingClientRect();
 
-    // document.querySelector('.img-upload__effect-level').classList.add('hidden');
+    document.querySelector('.img-upload__effect-level').classList.add('hidden');
     
     scaleImageControlValue.value = scaleImageValue + '%';    
 
