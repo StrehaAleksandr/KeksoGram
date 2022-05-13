@@ -1,7 +1,9 @@
+var MAX_EFFECT_VALUE = 100;
+
 var Effect = {
     none: {
         name: 'none',
-        filter: 'none',
+        filter: '',
         minValue: 0,
         maxValue: 0,
         measure: ''
@@ -58,6 +60,15 @@ var pinLeftCoord;
 
 var currentEffect = Effect.none;
 
+function setEffect(level) {
+    var formula = (currentEffect.maxValue - currentEffect.minValue) / 100;
+    uploadingImage.style.filter = currentEffect.filter + '(' + ((level * formula) + currentEffect.minValue) + currentEffect.measure + ')';
+}
+
+function clearEffect() {
+    uploadingImage.style.filter = '';
+}
+
 effectPin.addEventListener('mousedown', function(evt) {
     evt.preventDefault();
 
@@ -72,9 +83,7 @@ effectPin.addEventListener('mousedown', function(evt) {
             x: startCoords.x - moveEvt.clientX
         }
 
-        startCoords = {
-            x: moveEvt.clientX
-        }
+        startCoords.x = moveEvt.clientX;
 
         pinLeftCoord = effectPin.offsetLeft - shift.x;
 
@@ -88,7 +97,11 @@ effectPin.addEventListener('mousedown', function(evt) {
 
         effectPin.style.left = pinLeftCoord + 'px';
         effectDepth.style.width = pinLeftCoord + 'px';
-        effectValue.value = pinLeftCoord * 100 / effectLine.offsetWidth;
+
+        var valueLevel = pinLeftCoord * 100 / effectLine.offsetWidth;
+        
+        effectValue.value = valueLevel;
+        setEffect(valueLevel);
     }
 
     var onMouseUp = function(upEvt) {
@@ -103,17 +116,28 @@ effectPin.addEventListener('mousedown', function(evt) {
 })
 
 function viewEffect(index) {
-    function effect() {
-        uploadingImage.className = 'img-upload__preview effects__preview--' + imageEffects[index].value;
+    function onImageEffectClick(evt) {
+        var effectName = evt.target.value;
+        currentEffect = Effect[effectName];
 
-        if (imageEffects[index].value === 'none') {
+        uploadingImage.className = 'img-upload__preview effects__preview--' + effectName;
+
+        if (effectName === 'none') {
             document.querySelector('.img-upload__effect-level').classList.add('hidden');
+            clearEffect();
         }
         else {
             document.querySelector('.img-upload__effect-level').classList.remove('hidden');
         }
+
+        setEffect(MAX_EFFECT_VALUE);
+        
+        effectPin.style.left = effectLine.offsetWidth + 'px';
+        effectDepth.style.width = effectLine.offsetWidth + 'px';
+
     }
-    imageEffects[index].addEventListener('click', effect);
+
+    imageEffects[index].addEventListener('click', onImageEffectClick);
 }
 
 var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
