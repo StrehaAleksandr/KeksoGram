@@ -168,24 +168,36 @@ function onScaleImageBiggerClick(evt) {
 
 var hashtagInput = document.querySelector('.text__hashtags');
 
-function onHashTagInputValidation() {
+function onHashTagInputValidation(evt) {
+    evt.preventDefault();
+
     var hashtagsArray = hashtagInput.value.split(' ');
     var countSharp = 0;
     var positionSharp;
 
+    var isNotValidityHashTag = true;
+
     if (hashtagsArray.length > 5) {
-        alert('Должо быть не больше 5 хэш-тегов');
+        hashtagInput.setCustomValidity('Должо быть не больше 5 хэш-тегов');
+        hashtagInput.reportValidity();
+        isNotValidityHashTag = false;
     }
 
     for (var i = 0; i < hashtagsArray.length; i++) {
         if (hashtagsArray[i].indexOf('#') !== 0) {
-            alert('Хэш-тег начинается с <#>');
+            hashtagInput.setCustomValidity('Хэш-тег начинается с <#>');
+            hashtagInput.reportValidity();
+            isNotValidityHashTag = false;
         }
         if (hashtagsArray[i].length === 1) {
-            alert('Хэш-тег не может состоять только из <#>');
+            hashtagInput.setCustomValidity('Хэш-тег не может состоять только из <#>');
+            hashtagInput.reportValidity();
+            isNotValidityHashTag = false;
         }
         if (hashtagsArray[i].length > 20) {
-            alert('Длина хеш-тега не больше 20 символов, включая <#>');
+            hashtagInput.setCustomValidity('Длина хеш-тега не больше 20 символов, включая <#>');
+            hashtagInput.reportValidity();
+            isNotValidityHashTag = false;
         }
         pos = hashtagsArray[i].indexOf('#');
         while (positionSharp !== -1) {
@@ -194,13 +206,17 @@ function onHashTagInputValidation() {
         }
 
         if (count > 1) {
-            alert('Хеш-теги должны разделяться пробелом');
+            hashtagInput.setCustomValidity('Хеш-теги должны разделяться пробелом');
+            hashtagInput.reportValidity();
+            isNotValidityHashTag = false;
         }
 
         for (var i2 = 0; i2 < hashtagsArray.length; i2++) {
             if (i2 === i) continue;
             if (hashtagsArray[i2].toUpperCase() === hashtagsArray[i].toUpperCase()) {
-                alert('Нельзя повторять хеш-теги');
+                hashtagInput.setCustomValidity('Нельзя повторять хеш-теги');
+                hashtagInput.reportValidity();
+                isNotValidityHashTag = false;
                 break;
             }
         }
