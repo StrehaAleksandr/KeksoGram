@@ -166,29 +166,74 @@ function onScaleImageBiggerClick(evt) {
     }
 }
 
+var hashtagInput = document.querySelector('.text__hashtags');
+
+function onHashTagInputValidation() {
+    var hashtagsArray = hashtagInput.value.split(' ');
+    var count = 0;
+    var pos;
+
+    if (hashtagsArray.length > 5) {
+        alert('Должо быть не больше 5 хэш-тегов');
+    }
+
+    for (var i = 0; i < hashtagsArray.length; i++) {
+        if (hashtagsArray[i].indexOf('#') !== 0) {
+            alert('Хэш-тег начинается с <#>');
+        }
+        if (hashtagsArray[i].length === 1) {
+            alert('Хэш-тег не может состоять только из <#>');
+        }
+        if (hashtagsArray[i].length > 20) {
+            alert('Длина хеш-тега не больше 20 символов, включая <#>');
+        }
+        pos = hashtagsArray[i].indexOf('#');
+        while (pos !== -1) {
+            count++;
+            pos = hashtagsArray[i].indexOf('#', pos + 1)
+        }
+
+        if (count > 1) {
+            alert('Хеш-теги должны разделяться пробелом');
+        }
+
+        for (var i2 = 0; i2 < hashtagsArray.length; i2++) {
+            if (i2 === i) continue;
+            if (hashtagsArray[i2].toUpperCase() === hashtagsArray[i].toUpperCase()) {
+                alert('Нельзя повторять хеш-теги');
+                break;
+            }
+        }
+    }
+}
+
+var uploadSubmitButton = document.querySelector('#upload-submit');
+
 function onUploadImageInputChange(evt) {
     evt.preventDefault();
     imageChangeForm.classList.remove('hidden');
-
-    var effectLineSize = effectLine.getBoundingClientRect();
 
     document.querySelector('.img-upload__effect-level').classList.add('hidden');
     
     scaleImageControlValue.value = scaleImageValue + '%';    
 
-    scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick)
-    scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick)
+    scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick);
+    scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick);
 
     for (var i = 0; i < imageEffects.length; i++) {
         viewEffect(i);
     }
+
+    uploadSubmitButton.addEventListener('click', onHashTagInputValidation);
 }
 
 function onuploadImageCancelClick(evt) {
     evt.preventDefault();
 
-    scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick)
-    scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick)
+    scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
+    scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
+
+    uploadSubmitButton.removeEventListener('submit', onHashTagInputValidation);
 
     imageChangeForm.classList.add('hidden');
 }
