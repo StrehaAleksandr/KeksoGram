@@ -170,8 +170,8 @@ var hashtagInput = document.querySelector('.text__hashtags');
 
 function onHashTagInputValidation() {
     var hashtagsArray = hashtagInput.value.split(' ');
-    var count = 0;
-    var pos;
+    var countSharp = 0;
+    var positionSharp;
 
     if (hashtagsArray.length > 5) {
         alert('Должо быть не больше 5 хэш-тегов');
@@ -188,9 +188,9 @@ function onHashTagInputValidation() {
             alert('Длина хеш-тега не больше 20 символов, включая <#>');
         }
         pos = hashtagsArray[i].indexOf('#');
-        while (pos !== -1) {
-            count++;
-            pos = hashtagsArray[i].indexOf('#', pos + 1)
+        while (positionSharp !== -1) {
+            countSharp++;
+            positionSharp = hashtagsArray[i].indexOf('#', positionSharp + 1)
         }
 
         if (count > 1) {
