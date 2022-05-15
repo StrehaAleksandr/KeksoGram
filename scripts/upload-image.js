@@ -172,9 +172,7 @@ function onHashTagInputValidation(evt) {
     evt.preventDefault();
 
     var hashtagsArray = hashtagInput.value.split(' ');
-    var countSharp = 0;
-    var positionSharp;
-
+    
     var isNotValidityHashTag = true;
 
     if (hashtagsArray.length > 5) {
@@ -199,13 +197,8 @@ function onHashTagInputValidation(evt) {
             hashtagInput.reportValidity();
             isNotValidityHashTag = false;
         }
-        pos = hashtagsArray[i].indexOf('#');
-        while (positionSharp !== -1) {
-            countSharp++;
-            positionSharp = hashtagsArray[i].indexOf('#', positionSharp + 1)
-        }
 
-        if (count > 1) {
+        if (hashtagsArray[i].lastIndexOf('#') > 0) {
             hashtagInput.setCustomValidity('Хеш-теги должны разделяться пробелом');
             hashtagInput.reportValidity();
             isNotValidityHashTag = false;
