@@ -172,48 +172,48 @@ function onHashTagInputValidation(evt) {
     evt.preventDefault();
 
     var hashtagsArray = hashtagInput.value.split(' ');
-    
+
+    var errorsMessages = [];
+
     var isNotValidityHashTag = true;
 
     if (hashtagsArray.length > 5) {
-        hashtagInput.setCustomValidity('Должо быть не больше 5 хэш-тегов');
-        hashtagInput.reportValidity();
+        errorsMessages.push('Должо быть не больше 5 хэш-тегов');
         isNotValidityHashTag = false;
     }
 
     for (var i = 0; i < hashtagsArray.length; i++) {
         if (hashtagsArray[i].indexOf('#') !== 0) {
-            hashtagInput.setCustomValidity('Хэш-тег начинается с <#>');
-            hashtagInput.reportValidity();
+            errorsMessages.push('Хэш-тег начинается с <#>');
             isNotValidityHashTag = false;
         }
         if (hashtagsArray[i].length === 1) {
-            hashtagInput.setCustomValidity('Хэш-тег не может состоять только из <#>');
-            hashtagInput.reportValidity();
+            errorsMessages.push('Хэш-тег не может состоять только из <#>');
             isNotValidityHashTag = false;
         }
         if (hashtagsArray[i].length > 20) {
-            hashtagInput.setCustomValidity('Длина хеш-тега не больше 20 символов, включая <#>');
-            hashtagInput.reportValidity();
+            errorsMessages.push('Длина хеш-тега не больше 20 символов, включая <#>');
             isNotValidityHashTag = false;
         }
 
         if (hashtagsArray[i].lastIndexOf('#') > 0) {
-            hashtagInput.setCustomValidity('Хеш-теги должны разделяться пробелом');
-            hashtagInput.reportValidity();
+            errorsMessages.push('Хеш-теги должны разделяться пробелом');
             isNotValidityHashTag = false;
         }
 
         for (var i2 = 0; i2 < hashtagsArray.length; i2++) {
             if (i2 === i) continue;
             if (hashtagsArray[i2].toUpperCase() === hashtagsArray[i].toUpperCase()) {
-                hashtagInput.setCustomValidity('Нельзя повторять хеш-теги');
-                hashtagInput.reportValidity();
+                errorsMessages.push('Нельзя повторять хеш-теги');
                 isNotValidityHashTag = false;
                 break;
             }
         }
     }
+    
+    console.log(errorsMessages);
+    hashtagInput.setCustomValidity(errorsMessages);
+    hashtagInput.reportValidity();
 }
 
 var uploadSubmitButton = document.querySelector('#upload-submit');
@@ -247,5 +247,32 @@ function onuploadImageCancelClick(evt) {
     imageChangeForm.classList.add('hidden');
 }
 
+hashtagInput.onfocus = function() {
+    hashtagInput.focused = true;
+}
+
+hashtagInput.onblur = function() {
+    hashtagInput.focused = false;
+}
+
+function EscapeCloseKeyDown(evt) {
+    if (evt.key === 'Escape') {
+        if (!hashtagInput.focused) {
+            onuploadImageCancelClick(evt);
+        }
+    }
+}
+
+function onUploadImageCancelEnterKeyDown (evt) {
+    evt.preventDefault();
+    if (evt.key === 'Enter') {
+        onuploadImageCancelClick(evt);
+    }
+}
+
 uploadImageInput.addEventListener('click', onUploadImageInputChange);
 uploadImageCancel.addEventListener('click', onuploadImageCancelClick);
+
+uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
+
+window.addEventListener('keydown', EscapeCloseKeyDown);
