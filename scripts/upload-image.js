@@ -255,9 +255,19 @@ hashtagInput.onblur = function() {
     hashtagInput.focused = false;
 }
 
+var uploadingImageComment = document.querySelector('.text__description');
+
+uploadingImageComment.onfocus = function() {
+    uploadingImageComment.focused = true;
+}
+
+uploadingImageComment.onblur = function() {
+    uploadingImageComment.focused = false;
+}
+
 function EscapeCloseKeyDown(evt) {
     if (evt.key === 'Escape') {
-        if (!hashtagInput.focused) {
+        if (!hashtagInput.focused && !uploadingImageComment.focused) {
             onuploadImageCancelClick(evt);
         }
     }
