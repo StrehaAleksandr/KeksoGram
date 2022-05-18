@@ -1,8 +1,4 @@
-var MAX_EFFECT_VALUE = 100;
-var MIN_EFFECT_VALUE = 25;
-var MAX_HASH_TAGS = 5;
-var MAX_HASH_TAGS_LENGTH = 20;
-var SCALING_STEP = 25;
+'use strict'
 
 var Effect = {
     none: {

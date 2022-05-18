@@ -1,3 +1,5 @@
+'use strict'
+
 (function () {
     var bigPicture = document.querySelector('.big-picture');
     var allPictures = document.querySelectorAll('.picture');
