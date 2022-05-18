@@ -1,4 +1,7 @@
 var MAX_EFFECT_VALUE = 100;
+var MIN_EFFECT_VALUE = 25;
+var MAX_HASH_TAGS = 5;
+var MAX_HASH_TAGS_LENGTH = 20;
 
 var Effect = {
     none: {
@@ -144,12 +147,12 @@ var scaleImageSmallerButton = document.querySelector('.scale__control--smaller')
 var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
 
 var scaleImageControlValue = document.querySelector('.scale__control--value');
-var scaleImageValue = 100;
+var scaleImageValue = MAX_EFFECT_VALUE;
 
 function onScaleImageSmallerClick(evt) {
     evt.preventDefault();
 
-    if (scaleImageValue > 25) {
+    if (scaleImageValue > MIN_EFFECT_VALUE) {
         scaleImageValue = scaleImageValue - 25;
         scaleImageControlValue.value = scaleImageValue + '%';
         uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
@@ -159,7 +162,7 @@ function onScaleImageSmallerClick(evt) {
 function onScaleImageBiggerClick(evt) {
     evt.preventDefault();
     
-    if (scaleImageValue < 100) {
+    if (scaleImageValue < MAX_EFFECT_VALUE) {
         scaleImageValue = scaleImageValue + 25;
         scaleImageControlValue.value = scaleImageValue + '%';
         uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
@@ -192,32 +195,20 @@ function onHashTagInputValidation(evt) {
     };
 
     var resultErrorMessage = [];
-
-    if (hashtagsArray.length > 5) {
-        errorsMessagesStatus.countHashTags = true;
-    }
-
+    
+    errorsMessagesStatus.countHashTags = errorsMessagesStatus.countHashTags || hashtagsArray.length > MAX_HASH_TAGS;
+    
     for (var i = 0; i < hashtagsArray.length; i++) {
-        if (hashtagsArray[i].indexOf('#') !== 0) {
-            errorsMessagesStatus.noSharp = true;
-        }
-
-        if (hashtagsArray[i].length === 1) {
-            errorsMessagesStatus.onlySharp = true;
-        }
-
-        if (hashtagsArray[i].length > 20) {
-            errorsMessagesStatus.hashTagLength = true;
-        }
-
-        if (hashtagsArray[i].lastIndexOf('#') > 0) {
-            errorsMessagesStatus.spaceBetweenHashTags = true;
-        }
-
+        errorsMessagesStatus.noSharp = errorsMessagesStatus.noSharp || hashtagsArray[i].indexOf('#') !== 0;
+        
+        errorsMessagesStatus.onlySharp = errorsMessagesStatus.onlySharp || hashtagsArray[i].length === 1;
+                
+        errorsMessagesStatus.hashTagLength = errorsMessagesStatus.hashTagLength || hashtagsArray[i].length > MAX_HASH_TAGS_LENGTH;
+        
+        errorsMessagesStatus.spaceBetweenHashTags = errorsMessagesStatus.spaceBetweenHashTags || hashtagsArray[i].lastIndexOf('#') > 0;
+        
         for (var j = i + 1; j < hashtagsArray.length; j++) {
-            if (hashtagsArray[j].toUpperCase() === hashtagsArray[i].toUpperCase()) {
-                errorsMessagesStatus.doubleHashTag = true;
-            }
+            errorsMessagesStatus.doubleHashTag = errorsMessagesStatus.doubleHashTag || hashtagsArray[j].toUpperCase() === hashtagsArray[i].toUpperCase();            
         }
     }
 
