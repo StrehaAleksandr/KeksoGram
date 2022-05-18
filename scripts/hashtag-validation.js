@@ -46,7 +46,9 @@
         return resultErrorMessage;
     }
 
-    window.getValidationResult = function(string) {
+    function getValidationResult(string) {
         return validate(string);
     }
+
+    window.getValidationResult = getValidationResult;
 })();
