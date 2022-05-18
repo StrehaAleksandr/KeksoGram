@@ -76,7 +76,7 @@ effectPin.addEventListener('mousedown', function(evt) {
         x: evt.clientX
     }
 
-    var onMouseMove = function(moveEvt) {
+    function onMouseMove(moveEvt) {
         moveEvt.preventDefault();
 
         var shift = {
@@ -104,7 +104,7 @@ effectPin.addEventListener('mousedown', function(evt) {
         setEffect(valueLevel);
     }
 
-    var onMouseUp = function(upEvt) {
+    function onMouseUp(upEvt) {
         upEvt.preventDefault();
 
         document.removeEventListener('mousemove', onMouseMove);
