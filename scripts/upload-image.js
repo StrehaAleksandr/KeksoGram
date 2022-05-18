@@ -172,7 +172,7 @@ function onScaleImageBiggerClick(evt) {
 
 var hashtagInput = document.querySelector('.text__hashtags');
 
-function onUploadImageFormClick(evt) {
+function onUploadImageFormSubmit(evt) {
     evt.preventDefault();
 
     var hashtagsArray = hashtagInput.value.split(' ');
@@ -237,7 +237,7 @@ function onUploadImageInputChange(evt) {
         viewEffect(i);
     }
 
-    uploadImageForm.addEventListener('submit', onUploadImageFormClick);
+    uploadImageForm.addEventListener('submit', onUploadImageFormSubmit);
 }
 
 function onUploadImageCancelClick(evt) {
@@ -246,7 +246,7 @@ function onUploadImageCancelClick(evt) {
     scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
     scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
 
-    uploadImageForm.removeEventListener('submit', onUploadImageFormClick);
+    uploadImageForm.removeEventListener('submit', onUploadImageFormSubmit);
 
     imageChangeForm.classList.add('hidden');
 }
