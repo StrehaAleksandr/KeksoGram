@@ -171,7 +171,7 @@ function onScaleImageBiggerClick(evt) {
 
 var hashtagInput = document.querySelector('.text__hashtags');
 
-function onUploadSubmitButtonClick(evt) {
+function onUploadImageFormClick(evt) {
     evt.preventDefault();
 
     var hashtagsArray = hashtagInput.value.split(' ');
@@ -199,12 +199,9 @@ function onUploadSubmitButtonClick(evt) {
     errorsMessagesStatus.countHashTags = errorsMessagesStatus.countHashTags || hashtagsArray.length > MAX_HASH_TAGS;
     
     for (var i = 0; i < hashtagsArray.length; i++) {
-        errorsMessagesStatus.noSharp = errorsMessagesStatus.noSharp || hashtagsArray[i].indexOf('#') !== 0;
-        
-        errorsMessagesStatus.onlySharp = errorsMessagesStatus.onlySharp || hashtagsArray[i].length === 1;
-                
-        errorsMessagesStatus.hashTagLength = errorsMessagesStatus.hashTagLength || hashtagsArray[i].length > MAX_HASH_TAGS_LENGTH;
-        
+        errorsMessagesStatus.noSharp = errorsMessagesStatus.noSharp || hashtagsArray[i].indexOf('#') !== 0;        
+        errorsMessagesStatus.onlySharp = errorsMessagesStatus.onlySharp || hashtagsArray[i].length === 1;                
+        errorsMessagesStatus.hashTagLength = errorsMessagesStatus.hashTagLength || hashtagsArray[i].length > MAX_HASH_TAGS_LENGTH;        
         errorsMessagesStatus.spaceBetweenHashTags = errorsMessagesStatus.spaceBetweenHashTags || hashtagsArray[i].lastIndexOf('#') > 0;
         
         for (var j = i + 1; j < hashtagsArray.length; j++) {
@@ -222,7 +219,7 @@ function onUploadSubmitButtonClick(evt) {
     hashtagInput.reportValidity();
 }
 
-var uploadSubmitButton = document.querySelector('#upload-submit');
+var uploadImageForm = document.querySelector('#upload-select-image');
 
 function onUploadImageInputChange(evt) {
     evt.preventDefault();
@@ -239,7 +236,7 @@ function onUploadImageInputChange(evt) {
         viewEffect(i);
     }
 
-    uploadSubmitButton.addEventListener('click', onUploadSubmitButtonClick);
+    uploadImageForm.addEventListener('submit', onUploadImageFormClick);
 }
 
 function onUploadImageCancelClick(evt) {
@@ -248,7 +245,7 @@ function onUploadImageCancelClick(evt) {
     scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
     scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
 
-    uploadSubmitButton.removeEventListener('click', onUploadSubmitButtonClick);
+    uploadImageForm.removeEventListener('submit', onUploadImageFormClick);
 
     imageChangeForm.classList.add('hidden');
 }
