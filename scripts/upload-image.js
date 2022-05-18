@@ -193,38 +193,30 @@ function onHashTagInputValidation(evt) {
 
     var resultErrorMessage = [];
 
-    var isNotValidityHashTag = true;
-
     if (hashtagsArray.length > 5) {
         errorsMessagesStatus.countHashTags = true;
-        isNotValidityHashTag = false;
     }
 
     for (var i = 0; i < hashtagsArray.length; i++) {
         if (hashtagsArray[i].indexOf('#') !== 0) {
             errorsMessagesStatus.noSharp = true;
-            isNotValidityHashTag = false;
         }
 
         if (hashtagsArray[i].length === 1) {
             errorsMessagesStatus.onlySharp = true;
-            isNotValidityHashTag = false;
         }
 
         if (hashtagsArray[i].length > 20) {
             errorsMessagesStatus.hashTagLength = true;
-            isNotValidityHashTag = false;
         }
 
         if (hashtagsArray[i].lastIndexOf('#') > 0) {
             errorsMessagesStatus.spaceBetweenHashTags = true;
-            isNotValidityHashTag = false;
         }
 
         for (var j = i + 1; j < hashtagsArray.length; j++) {
             if (hashtagsArray[j].toUpperCase() === hashtagsArray[i].toUpperCase()) {
                 errorsMessagesStatus.doubleHashTag = true;
-                isNotValidityHashTag = false;
             }
         }
     }
