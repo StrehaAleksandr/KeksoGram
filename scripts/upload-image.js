@@ -230,7 +230,7 @@ function onHashTagInputValidation(evt) {
     }
 
     for (var key in errorsMessagesStatus) {
-        if (errorsMessagesStatus[key] === true) {
+        if (errorsMessagesStatus[key]) {
             resultErrorMessage.push(errorsMessages[key]);
         }
     }
