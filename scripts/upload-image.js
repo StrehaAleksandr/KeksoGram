@@ -257,7 +257,7 @@ function onUploadImageCancelClick(evt) {
     scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
     scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
 
-    uploadSubmitButton.removeEventListener('submit', onHashTagInputValidation);
+    uploadSubmitButton.removeEventListener('click', onHashTagInputValidation);
 
     imageChangeForm.classList.add('hidden');
 }
