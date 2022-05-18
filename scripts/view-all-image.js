@@ -1,4 +1,4 @@
-// 'use strict'
+'use strict';
 
 (function () {
     var imageTemplate = document.querySelector('#picture').content.querySelector('.picture');

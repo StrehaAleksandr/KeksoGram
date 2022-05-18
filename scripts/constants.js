@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var MAX_COMMENTS = 10;
 var MIN_LIKES = 15;
