@@ -7,10 +7,19 @@
     var socialCommentCount = document.querySelector('.social__comment-count');
     var commentLoader = document.querySelector('.comments-loader');
 
-    bigViewClose.addEventListener('click', function(evt) {
+    function onBigViewCloseClick(evt) {
         evt.preventDefault();
         bigPicture.classList.add('hidden');
-    })
+    }
+
+    function onBigPictureEscapeKeyDown(evt) {
+        if (evt.key === 'Escape') {
+            onBigViewCloseClick(evt);
+        }
+    }
+
+    bigViewClose.addEventListener('click', onBigViewCloseClick);
+    window.addEventListener('keydown', onBigPictureEscapeKeyDown);
 
     function initPicture(index) {
         function onPictureClick(evt) {
