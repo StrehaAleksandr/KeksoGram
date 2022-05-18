@@ -171,7 +171,7 @@ function onScaleImageBiggerClick(evt) {
 
 var hashtagInput = document.querySelector('.text__hashtags');
 
-function onHashTagInputValidation(evt) {
+function onUploadSubmitButtonValidation(evt) {
     evt.preventDefault();
 
     var hashtagsArray = hashtagInput.value.split(' ');
@@ -239,7 +239,7 @@ function onUploadImageInputChange(evt) {
         viewEffect(i);
     }
 
-    uploadSubmitButton.addEventListener('click', onHashTagInputValidation);
+    uploadSubmitButton.addEventListener('click', onUploadSubmitButtonValidation);
 }
 
 function onUploadImageCancelClick(evt) {
@@ -248,7 +248,7 @@ function onUploadImageCancelClick(evt) {
     scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
     scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
 
-    uploadSubmitButton.removeEventListener('click', onHashTagInputValidation);
+    uploadSubmitButton.removeEventListener('click', onUploadSubmitButtonValidation);
 
     imageChangeForm.classList.add('hidden');
 }
