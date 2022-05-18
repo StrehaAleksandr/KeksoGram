@@ -2,6 +2,7 @@ var MAX_EFFECT_VALUE = 100;
 var MIN_EFFECT_VALUE = 25;
 var MAX_HASH_TAGS = 5;
 var MAX_HASH_TAGS_LENGTH = 20;
+var SCALING_STEP = 25;
 
 var Effect = {
     none: {
@@ -153,7 +154,7 @@ function onScaleImageSmallerClick(evt) {
     evt.preventDefault();
 
     if (scaleImageValue > MIN_EFFECT_VALUE) {
-        scaleImageValue = scaleImageValue - 25;
+        scaleImageValue = scaleImageValue - SCALING_STEP;
         scaleImageControlValue.value = scaleImageValue + '%';
         uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
     }     
@@ -163,7 +164,7 @@ function onScaleImageBiggerClick(evt) {
     evt.preventDefault();
     
     if (scaleImageValue < MAX_EFFECT_VALUE) {
-        scaleImageValue = scaleImageValue + 25;
+        scaleImageValue = scaleImageValue + SCALING_STEP;
         scaleImageControlValue.value = scaleImageValue + '%';
         uploadingImage.style.transform = 'scale(' + (scaleImageValue / 100) + ')';
     }
