@@ -11,17 +11,15 @@
 
     function onBigViewCloseClick(evt) {
         evt.preventDefault();
+        document.removeEventListener('keydown', onBigPictureEscapeKeyDown);
         bigPicture.classList.add('hidden');
     }
 
     function onBigPictureEscapeKeyDown(evt) {
-        if (evt.key === 'Escape') {
-            onBigViewCloseClick(evt);
-        }
+        EscapeCallBack(onBigViewCloseClick(evt));
     }
 
     bigViewClose.addEventListener('click', onBigViewCloseClick);
-    document.addEventListener('keydown', onBigPictureEscapeKeyDown);
 
     function initPicture(index) {
         function onPictureClick(evt) {
@@ -52,6 +50,8 @@
             bigPicture.querySelector('.likes-count').textContent = allImage[index].likes;
             bigPicture.querySelector('.comments-count').textContent = allImage[index].comments.length;
             bigPicture.querySelector('.social__caption').textContent = allImage[index].description;
+
+            document.addEventListener('keydown', onBigPictureEscapeKeyDown);
         
             bigPicture.classList.remove('hidden');
             socialCommentCount.classList.add('visually-hidden');

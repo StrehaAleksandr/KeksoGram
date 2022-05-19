@@ -186,30 +186,18 @@
 
     var uploadImageForm = document.querySelector('#upload-select-image');
 
-    function onUploadImageInputChange() {
-        var file = uploadImageInput.files[0];
-        var fileName = file.name.toLowerCase();
-        
-        var matches = FILE_TYPES.some(function (fileType) {
-            return fileName.endsWith(fileType);
-        });
+    var uploadingImageComment = document.querySelector('.text__description');
 
-        if (matches) {
-            var reader = new FileReader();
-      
-            reader.addEventListener('load', function () {
-              uploadingImage.querySelector('img').src = reader.result;
-              imageChangeForm.classList.remove('hidden');
-            });
-      
-            reader.readAsDataURL(file);
-          } else {
-            onError(FILE_TYPE_ERROR_MESSAGE);
+    function onUploadImageInputEscapeKeyDown(evt) {
+        if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
+            EscapeCallBack(onUploadImageCancelClick(evt));
         }
+    }
 
-        function onError(errorMessage) {
-            console.log(errorMessage);
-        }
+    function openForm() {
+        imageChangeForm.classList.remove('hidden');
+
+        document.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
 
         document.querySelector('.img-upload__effect-level').classList.add('hidden');
 
@@ -225,6 +213,32 @@
         uploadImageForm.addEventListener('submit', onUploadImageFormSubmit);
     }
 
+    function onUploadImageInputChange() {
+        var file = uploadImageInput.files[0];
+        var fileName = file.name.toLowerCase();
+        
+        var matches = FILE_TYPES.some(function (fileType) {
+            return fileName.endsWith(fileType);
+        });
+
+        if (matches) {
+            var reader = new FileReader();
+      
+            reader.addEventListener('load', function () {
+              uploadingImage.querySelector('img').src = reader.result;
+              openForm();
+            });
+      
+            reader.readAsDataURL(file);
+          } else {
+            onError(FILE_TYPE_ERROR_MESSAGE);
+        }
+
+        function onError(errorMessage) {
+            console.log(errorMessage);
+        }
+    }
+
     function onUploadImageCancelClick(evt) {
         evt.preventDefault();
 
@@ -233,17 +247,9 @@
 
         uploadImageForm.removeEventListener('submit', onUploadImageFormSubmit);
 
+        document.removeEventListener('keydown', onUploadImageInputEscapeKeyDown);
+
         imageChangeForm.classList.add('hidden');
-    }
-
-    var uploadingImageComment = document.querySelector('.text__description');
-
-    function onUploadImageInputEscapeKeyDown(evt) {
-        if (evt.key === 'Escape') {
-            if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
-                onUploadImageCancelClick(evt);
-            }
-        }
     }
 
     function onUploadImageCancelEnterKeyDown(evt) {
@@ -257,7 +263,4 @@
     uploadImageCancel.addEventListener('click', onUploadImageCancelClick);
 
     uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
-
-    document.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
-
 })();
