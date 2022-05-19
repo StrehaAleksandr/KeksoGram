@@ -9,14 +9,13 @@
     var socialCommentCount = document.querySelector('.social__comment-count');
     var commentLoader = document.querySelector('.comments-loader');
 
-    function onBigViewCloseClick(evt) {
-        evt.preventDefault();
+    function onBigViewCloseClick() {
         document.removeEventListener('keydown', onBigPictureEscapeKeyDown);
         bigPicture.classList.add('hidden');
     }
 
     function onBigPictureEscapeKeyDown(evt) {
-        EscapeCallBack(onBigViewCloseClick(evt));
+        EscapeCallBack(evt, onBigViewCloseClick);
     }
 
     bigViewClose.addEventListener('click', onBigViewCloseClick);
@@ -58,7 +57,7 @@
             commentLoader.classList.add('visually-hidden');
         }
 
-        allPictures[i].addEventListener('click', onPictureClick);
+        allPictures[index].addEventListener('click', onPictureClick);
     }
 
     for (var i = 0; i < allPictures.length; i++) {

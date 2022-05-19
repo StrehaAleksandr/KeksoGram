@@ -190,7 +190,7 @@
 
     function onUploadImageInputEscapeKeyDown(evt) {
         if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
-            EscapeCallBack(onUploadImageCancelClick(evt));
+            EscapeCallBack(evt, onUploadImageCancelClick);
         }
     }
 
@@ -239,9 +239,7 @@
         }
     }
 
-    function onUploadImageCancelClick(evt) {
-        evt.preventDefault();
-
+    function onUploadImageCancelClick() {
         scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
         scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
 
