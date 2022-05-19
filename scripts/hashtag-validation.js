@@ -2,6 +2,9 @@
 
 (function() {
     function validate(str) {
+        var MAX_HASH_TAGS = 5;
+        var MAX_HASH_TAGS_LENGTH = 20;
+
         var hashtagsArray = str.split(' ');
 
         var errorsMessages = {

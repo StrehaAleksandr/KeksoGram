@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+    var COMMENT_STEP = 5;
+
     var bigPicture = document.querySelector('.big-picture');
     var allPictures = document.querySelectorAll('.picture');
     var bigViewClose = document.querySelector('#picture-cancel');
@@ -19,7 +21,7 @@
     }
 
     bigViewClose.addEventListener('click', onBigViewCloseClick);
-    window.addEventListener('keydown', onBigPictureEscapeKeyDown);
+    document.addEventListener('keydown', onBigPictureEscapeKeyDown);
 
     function initPicture(index) {
         function onPictureClick(evt) {

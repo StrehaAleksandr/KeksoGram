@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+    var MAX_EFFECT_VALUE = 100;
+    var MIN_EFFECT_VALUE = 25;
+    var SCALING_STEP = 25;
+
     var Effect = {
         none: {
             name: 'none',
@@ -254,6 +258,6 @@
 
     uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
 
-    window.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
+    document.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
 
 })();
