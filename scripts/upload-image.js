@@ -60,13 +60,26 @@
     var uploadingImage = document.querySelector('.img-upload__preview');
     var imageEffects = document.querySelectorAll('.effects__radio');
 
-    var effectLine = document.querySelector('.effect-level__line');
-    var effectPin = document.querySelector('.effect-level__pin');
-    var effectDepth = document.querySelector('.effect-level__depth');
-    var effectValue = document.querySelector('.effect-level__value');
+    var effectSlider = document.querySelector('.img-upload__effect-level');
+    var effectLine = effectSlider.querySelector('.effect-level__line');
+    var effectPin = effectSlider.querySelector('.effect-level__pin');
+    var effectDepth = effectSlider.querySelector('.effect-level__depth');
+    var effectValue = effectSlider.querySelector('.effect-level__value');
     var pinLeftCoord;
 
     var currentEffect = Effect.none;
+
+    var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
+    var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
+
+    var scaleImageControlValue = document.querySelector('.scale__control--value');
+    var scaleImageValue = MAX_EFFECT_VALUE;
+
+    var hashtagInput = document.querySelector('.text__hashtags');
+
+    var uploadImageForm = document.querySelector('#upload-select-image');
+
+    var uploadingImageComment = document.querySelector('.text__description');
 
     function setEffect(level) {
         var formula = (currentEffect.maxValue - currentEffect.minValue) / 100;
@@ -131,11 +144,11 @@
             uploadingImage.className = 'img-upload__preview effects__preview--' + effectName;
 
             if (effectName === 'none') {
-                document.querySelector('.img-upload__effect-level').classList.add('hidden');
+                effectSlider.classList.add('hidden');
                 clearEffect();
             }
             else {
-                document.querySelector('.img-upload__effect-level').classList.remove('hidden');
+                effectSlider.classList.remove('hidden');
             }
 
             setEffect(MAX_EFFECT_VALUE);
@@ -147,12 +160,6 @@
 
         imageEffects[index].addEventListener('click', onImageEffectClick);
     }
-
-    var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
-    var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
-
-    var scaleImageControlValue = document.querySelector('.scale__control--value');
-    var scaleImageValue = MAX_EFFECT_VALUE;
 
     function onScaleImageSmallerClick(evt) {
         evt.preventDefault();
@@ -174,8 +181,6 @@
         }
     }
 
-    var hashtagInput = document.querySelector('.text__hashtags');
-
     function onUploadImageFormSubmit(evt) {
         evt.preventDefault();
 
@@ -183,10 +188,6 @@
         hashtagInput.reportValidity();
 
     }
-
-    var uploadImageForm = document.querySelector('#upload-select-image');
-
-    var uploadingImageComment = document.querySelector('.text__description');
 
     function onUploadImageInputEscapeKeyDown(evt) {
         if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
@@ -199,7 +200,7 @@
 
         document.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
 
-        document.querySelector('.img-upload__effect-level').classList.add('hidden');
+        effectSlider.classList.add('hidden');
 
         scaleImageControlValue.value = scaleImageValue + '%';
 
