@@ -53,33 +53,45 @@
     var FILE_TYPE_ERROR_MESSAGE = 'Файл не является изображением';
     var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
-    var uploadImageInput = document.querySelector('#upload-file');
-    var imageChangeForm = document.querySelector('.img-upload__overlay');
-    var uploadImageCancel = document.querySelector('#upload-cancel');
 
-    var uploadingImage = document.querySelector('.img-upload__preview');
-    var imageEffects = document.querySelectorAll('.effects__radio');
+    var uploadImageForm = document.querySelector('#upload-select-image');
+    var uploadImageInput = uploadImageForm.querySelector('#upload-file');
+    var imageChangeForm = uploadImageForm.querySelector('.img-upload__overlay');
+    var uploadImageCancel = imageChangeForm.querySelector('#upload-cancel');
 
-    var effectSlider = document.querySelector('.img-upload__effect-level');
+    var uploadingImage = imageChangeForm.querySelector('.img-upload__preview');
+    var imageEffects = imageChangeForm.querySelectorAll('.effects__radio');
+
+    var effectSlider = imageChangeForm.querySelector('.img-upload__effect-level');
     var effectLine = effectSlider.querySelector('.effect-level__line');
     var effectPin = effectSlider.querySelector('.effect-level__pin');
     var effectDepth = effectSlider.querySelector('.effect-level__depth');
     var effectValue = effectSlider.querySelector('.effect-level__value');
+
+    var scaleImageSmallerButton = imageChangeForm.querySelector('.scale__control--smaller');
+    var scaleImageBiggerButton = imageChangeForm.querySelector('.scale__control--bigger');
+    var scaleImageControlValue = imageChangeForm.querySelector('.scale__control--value');
+
+    var hashtagInput = imageChangeForm.querySelector('.text__hashtags');
+    var uploadingImageComment = imageChangeForm.querySelector('.text__description');
+
+    var scaleImageValue = MAX_EFFECT_VALUE;
+    var currentEffect = Effect.none;
     var pinLeftCoord;
 
-    var currentEffect = Effect.none;
+    function onUploadImageFormSubmit(evt) {
+        evt.preventDefault();
 
-    var scaleImageSmallerButton = document.querySelector('.scale__control--smaller');
-    var scaleImageBiggerButton = document.querySelector('.scale__control--bigger');
+        hashtagInput.setCustomValidity(window.getValidationResult(hashtagInput.value));
+        hashtagInput.reportValidity();
 
-    var scaleImageControlValue = document.querySelector('.scale__control--value');
-    var scaleImageValue = MAX_EFFECT_VALUE;
+    }
 
-    var hashtagInput = document.querySelector('.text__hashtags');
-
-    var uploadImageForm = document.querySelector('#upload-select-image');
-
-    var uploadingImageComment = document.querySelector('.text__description');
+    function onUploadImageInputEscapeKeyDown(evt) {
+        if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
+            window.util.isEscape2(evt, clearEffect, closeForm);
+        }
+    }
 
     function setEffect(level) {
         var formula = (currentEffect.maxValue - currentEffect.minValue) / 100;
@@ -90,7 +102,7 @@
         uploadingImage.style.filter = '';
     }
 
-    effectPin.addEventListener('mousedown', function (evt) {
+    function onEffectPinMouseDown(evt) {
         evt.preventDefault();
 
         var startCoords = {
@@ -134,7 +146,7 @@
 
         document.addEventListener('mousemove', onMouseMove);
         document.addEventListener('mouseup', onMouseUp);
-    })
+    }
 
     function viewEffect(index) {
         function onImageEffectClick(evt) {
@@ -181,37 +193,42 @@
         }
     }
 
-    function onUploadImageFormSubmit(evt) {
-        evt.preventDefault();
-
-        hashtagInput.setCustomValidity(window.getValidationResult(hashtagInput.value));
-        hashtagInput.reportValidity();
-
-    }
-
-    function onUploadImageInputEscapeKeyDown(evt) {
-        if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
-            EscapeCallBack(evt, onUploadImageCancelClick);
-        }
-    }
-
     function openForm() {
         imageChangeForm.classList.remove('hidden');
-
-        document.addEventListener('keydown', onUploadImageInputEscapeKeyDown);
-
         effectSlider.classList.add('hidden');
 
         scaleImageControlValue.value = scaleImageValue + '%';
-
-        scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick);
-        scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick);
 
         for (var i = 0; i < imageEffects.length; i++) {
             viewEffect(i);
         }
 
+        initFormListenes();
+    }
+
+    function closeForm() {
+        imageChangeForm.classList.add('hidden');
+        removeFormListeners();
+    }
+
+    function initFormListenes() {
+        document.addEventListener('keydown', onUploadImageInputEscapeKeyDown); 
+        scaleImageSmallerButton.addEventListener('click', onScaleImageSmallerClick);
+        scaleImageBiggerButton.addEventListener('click', onScaleImageBiggerClick);
         uploadImageForm.addEventListener('submit', onUploadImageFormSubmit);
+        effectPin.addEventListener('mousedown', onEffectPinMouseDown);
+        uploadImageCancel.addEventListener('click', onUploadImageCancelClick);   
+        uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
+    }
+
+    function removeFormListeners() {
+        document.removeEventListener('keydown', onUploadImageInputEscapeKeyDown); 
+        scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
+        scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
+        uploadImageForm.removeEventListener('submit', onUploadImageFormSubmit);
+        effectPin.removeEventListener('mousedown', onEffectPinMouseDown);
+        uploadImageCancel.removeEventListener('click', onUploadImageCancelClick);   
+        uploadImageCancel.removeEventListener('keydown', onUploadImageCancelEnterKeyDown);
     }
 
     function onUploadImageInputChange() {
@@ -241,25 +258,15 @@
     }
 
     function onUploadImageCancelClick() {
-        scaleImageSmallerButton.removeEventListener('click', onScaleImageSmallerClick);
-        scaleImageBiggerButton.removeEventListener('click', onScaleImageBiggerClick);
-
-        uploadImageForm.removeEventListener('submit', onUploadImageFormSubmit);
-
-        document.removeEventListener('keydown', onUploadImageInputEscapeKeyDown);
-
-        imageChangeForm.classList.add('hidden');
+        clearEffect();
+        closeForm();
     }
 
     function onUploadImageCancelEnterKeyDown(evt) {
         evt.preventDefault();
-        if (evt.key === 'Enter') {
-            onUploadImageCancelClick(evt);
-        }
+
+        window.util.isEnter(evt, clearEffect, closeForm);
     }
 
     uploadImageInput.addEventListener('change', onUploadImageInputChange);
-    uploadImageCancel.addEventListener('click', onUploadImageCancelClick);
-
-    uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
 })();

@@ -3,29 +3,31 @@
 (function () {
     var COMMENT_STEP = 5;
 
-    var bigPicture = document.querySelector('.big-picture');
-    var allPictures = document.querySelectorAll('.picture');
-    var bigViewClose = document.querySelector('#picture-cancel');
-    var socialCommentCount = document.querySelector('.social__comment-count');
-    var commentLoader = document.querySelector('.comments-loader');
+    var allPictures = document.querySelectorAll('.picture')
+    var bigPicture = document.querySelector('.big-picture');;
+    var bigViewClose = bigPicture.querySelector('#picture-cancel');
+    var socialCommentCount = bigPicture.querySelector('.social__comment-count');
+    var commentList = bigPicture.querySelector('.social__comments');
+    var commentLoader = bigPicture.querySelector('.comments-loader');
 
     function onBigViewCloseClick() {
-        document.removeEventListener('keydown', onBigPictureEscapeKeyDown);
-        bigPicture.classList.add('hidden');
+        closePicture();
     }
 
     function onBigPictureEscapeKeyDown(evt) {
-        EscapeCallBack(evt, onBigViewCloseClick);
+        window.util.isEscape(evt, closePicture);
     }
 
-    bigViewClose.addEventListener('click', onBigViewCloseClick);
+    function closePicture() {
+        document.removeEventListener('keydown', onBigPictureEscapeKeyDown);
+        bigViewClose.removeEventListener('click', onBigViewCloseClick);
+        bigPicture.classList.add('hidden');
+    }
 
     function initPicture(index) {
         function onPictureClick(evt) {
             evt.preventDefault();
         
-            var commentList = bigPicture.querySelector('.social__comments');
-
             while (commentList.firstChild) {
                 commentList.removeChild(commentList.firstChild);
             } 
@@ -51,6 +53,7 @@
             bigPicture.querySelector('.social__caption').textContent = allImage[index].description;
 
             document.addEventListener('keydown', onBigPictureEscapeKeyDown);
+            bigViewClose.addEventListener('click', onBigViewCloseClick);
         
             bigPicture.classList.remove('hidden');
             socialCommentCount.classList.add('visually-hidden');
