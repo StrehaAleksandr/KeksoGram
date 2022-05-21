@@ -99,6 +99,7 @@
     }
 
     function clearEffect() {
+        uploadingImage.className = 'img-upload__preview';
         uploadingImage.style.filter = '';
     }
 
