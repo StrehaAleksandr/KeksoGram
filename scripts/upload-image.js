@@ -89,7 +89,7 @@
 
     function onUploadImageInputEscapeKeyDown(evt) {
         if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
-            window.util.isEscape2(evt, clearEffect, closeForm);
+            window.util.isEscape(evt, clearEffect, closeForm);
         }
     }
 
