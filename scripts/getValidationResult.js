@@ -30,7 +30,7 @@
         errorsMessagesStatus.countHashTags = errorsMessagesStatus.countHashTags || hashtagsArray.length > MAX_HASH_TAGS;
         
         for (var i = 0; i < hashtagsArray.length; i++) {
-            errorsMessagesStatus.noSharp = errorsMessagesStatus.noSharp || hashtagsArray[i].indexOf('#') !== 0;        
+            errorsMessagesStatus.noSharp = errorsMessagesStatus.noSharp || hashtagsArray[i].indexOf('#') !== 0 && hashtagsArray[i].length > 0;        
             errorsMessagesStatus.onlySharp = errorsMessagesStatus.onlySharp || hashtagsArray[i].length === 1;                
             errorsMessagesStatus.hashTagLength = errorsMessagesStatus.hashTagLength || hashtagsArray[i].length > MAX_HASH_TAGS_LENGTH;        
             errorsMessagesStatus.spaceBetweenHashTags = errorsMessagesStatus.spaceBetweenHashTags || hashtagsArray[i].lastIndexOf('#') > 0;

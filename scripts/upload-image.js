@@ -85,6 +85,17 @@
         hashtagInput.setCustomValidity(window.getValidationResult(hashtagInput.value));
         hashtagInput.reportValidity();
 
+        // window.backend.postData(new FormData(uploadImageForm), function(response){
+        //     clearEffect();
+        //     closeForm();
+        // });
+
+        var uploadData = new FormData(uploadImageForm);
+
+        console.log(uploadData.get("hashtags"));
+
+        clearEffect();
+        closeForm();
     }
 
     function onUploadImageInputEscapeKeyDown(evt) {
