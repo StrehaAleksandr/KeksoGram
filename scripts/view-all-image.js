@@ -21,6 +21,16 @@
         }
     }
 
+    function removePictures() {
+        var allViewImages = document.querySelectorAll('.picture');
+
+        if (allViewImages.length !== 0) {
+            for (var i = 0; i < allViewImages.length; i++) {
+                allViewImages[i].remove();
+            }
+        }
+    }
+
     function viewAllImages(images) {
         for (var i = 0; i < images.length; i++) {
             var cloneImageTemplate = imageTemplate.cloneNode(true);
@@ -32,6 +42,7 @@
             pictureFragment.appendChild(cloneImageTemplate);
         }
 
+        removePictures();
         pictures.appendChild(pictureFragment);
         initListener(images);
         document.querySelector('.img-filters').classList.remove('img-filters--inactive');

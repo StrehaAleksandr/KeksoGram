@@ -6,13 +6,7 @@
     var discussedImageButton = document.querySelector('#filter-discussed');
 
     function popularImagesFilter() {
-        var allViewImages = document.querySelectorAll('.picture');
-
-        for (var i = 0; i < allViewImages.length; i++) {
-            allViewImages[i].remove();
-        }
-
-        window.viewAllImages(allImage);
+        window.viewAllImages(window.allImage);
 
         popularImagesButton.className = 'img-filters__button  img-filters__button--active';
         newImagesButton.className = 'img-filters__button';
@@ -20,13 +14,7 @@
     }
 
     function newImagesFilter() {
-        var allViewImages = document.querySelectorAll('.picture');
-
-        for (var i = 0; i < allViewImages.length; i++) {
-            allViewImages[i].remove();
-        }
-
-        var newImagesArray = allImage.slice();
+        var newImagesArray = window.allImage.slice();
         var tenRandomImages = [];
 
         function getRandomNumber(min, max) {
@@ -34,13 +22,7 @@
         }
 
         for (var i = 0; i < 10; i++) {
-            tenRandomImages[i] = newImagesArray[getRandomNumber(0, newImagesArray.length)];
-            for (var j = 0; j < tenRandomImages.length; j++) {
-                if (i === j) continue;
-                if (tenRandomImages[j] === tenRandomImages[i]) {
-                    tenRandomImages[j] = newImagesArray[getRandomNumber(0, newImagesArray.length)];
-                }
-            }
+            tenRandomImages.push(newImagesArray.splice(getRandomNumber(0, newImagesArray.length), 1)[0]);
         }
 
         window.viewAllImages(tenRandomImages);
@@ -51,13 +33,7 @@
     }
 
     function discussedImageFilter() {
-        var allViewImages = document.querySelectorAll('.picture');
-
-        for (var i = 0; i < allViewImages.length; i++) {
-            allViewImages[i].remove();
-        }
-
-        var sortArray = allImage.slice();
+        var sortArray = window.allImage.slice();
 
         sortArray.sort(function(a, b) {
             if (a.comments.length > b.comments.length) {
