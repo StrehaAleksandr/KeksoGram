@@ -27,6 +27,23 @@
         }
 
         var newImagesArray = allImage.slice();
+        var tenRandomImages = [];
+
+        function getRandomNumber(min, max) {
+            return Math.floor(min + Math.random() * (max - min));
+        }
+
+        for (var i = 0; i < 10; i++) {
+            tenRandomImages[i] = newImagesArray[getRandomNumber(0, newImagesArray.length)];
+            for (var j = 0; j < tenRandomImages.length; j++) {
+                if (i === j) continue;
+                if (tenRandomImages[j] === tenRandomImages[i]) {
+                    tenRandomImages[j] = newImagesArray[getRandomNumber(0, newImagesArray.length)];
+                }
+            }
+        }
+
+        window.viewAllImages(tenRandomImages);
 
         newImagesButton.className = 'img-filters__button  img-filters__button--active';
         popularImagesButton.className = 'img-filters__button';

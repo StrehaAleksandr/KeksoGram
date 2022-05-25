@@ -22,7 +22,7 @@
     }
 
     function viewAllImages(images) {
-        for (var i = 0; i < All_PHOTOS_COUNT; i++) {
+        for (var i = 0; i < images.length; i++) {
             var cloneImageTemplate = imageTemplate.cloneNode(true);
 
             cloneImageTemplate.querySelector('.picture__img').src = images[i].url;
