@@ -32,19 +32,18 @@
     function initPictureListenres() {
         document.addEventListener('keydown', onBigPictureEscapeKeyDown);
         bigViewClose.addEventListener('click', onBigViewCloseClick);
+        commentLoader.addEventListener('click', onCommentLoaderClick);
     }
 
     function removePictureListeners() {
         document.removeEventListener('keydown', onBigPictureEscapeKeyDown);
         bigViewClose.removeEventListener('click', onBigViewCloseClick);
+        commentLoader.removeEventListener('click', onCommentLoaderClick);
     }
 
-    function commentLoaderDisable(pictureData) {
-        var countViewComments = document.querySelectorAll('.social__comment');
-
-        if (countViewComments.length === pictureData.comments.length) {
-            commentLoader.classList.add('hidden');
-        }
+    function onCommentLoaderClick() {
+        loadNextComments();
+        commentLoaderDisable();
     }
 
     function showBigPicture(pictureData) {
@@ -75,10 +74,9 @@
         bigPicture.querySelector('.social__caption').textContent = pictureData.description;
 
         openPicture();     
-        commentLoaderDisable(pictureData);   
-        commentLoader.addEventListener('click', onCommentLoaderClick);
+        commentLoaderDisable();  
 
-        function loadNextComments(pictureData) {
+        function loadNextComments() {
             for (var i = commentView; i < Math.min(pictureData.comments.length, (COMMENT_STEP + commentView)); i++) {
                 var userComment = document.createElement('li');
                 userComment.classList.add('social__comment');
@@ -99,13 +97,30 @@
                 commentView = pictureData.comments.length;
             }
     
-            // socialCommentCount.innerHTML = commentView + ' из <span class="comments-count">' + pictureData.comments.length + '</span> комментариев';
+            // console.log(socialCommentCount.textContent[0]);
+            // console.log(commentView);
+            // socialCommentCount.textContent[0] = commentView;
+            // var str = '5 dfd';
+            // console.log(str);
+            // str = str.split(' ');
+            // console.log(str);
+            // var abc = socialCommentCount.innerHTML.split(' ');
+            // console.log(abc);
+            // abc[0] = commentView;
+            // console.log(abc);
+            // socialCommentCount.textContent;
         }
 
-        function onCommentLoaderClick() {
-            loadNextComments(pictureData);
-            commentLoaderDisable(pictureData);
+        function commentLoaderDisable() {
+            var countViewComments = document.querySelectorAll('.social__comment');
+    
+            if (countViewComments.length === pictureData.comments.length) {
+                commentLoader.classList.add('hidden');
+            }
         }
+
+        window.loadNextComments = loadNextComments;
+        window.commentLoaderDisable = commentLoaderDisable;
     }
 
     window.showBigPicture = showBigPicture;
