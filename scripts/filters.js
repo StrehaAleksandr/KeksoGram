@@ -5,19 +5,6 @@
     var newImagesButton = document.querySelector('#filter-new');
     var discussedImageButton = document.querySelector('#filter-discussed');
 
-    var DEBOUNCE_INTERVAL = 500;
-    
-    var lastTimeout;
-
-    function debouce(fun) {
-        if (lastTimeout) {
-            window.clearTimeout(lastTimeout);
-        }
-        lastTimeout = window.setTimeout(function() {
-            fun();
-        }, DEBOUNCE_INTERVAL)
-    }
-
     function popularImagesFilter() {
         window.viewAllImages(window.allImage);
 
@@ -69,15 +56,15 @@
     }
 
     function onPopularImagesButtonClick() {
-        debouce(popularImagesFilter);
+        window.util.debouce(popularImagesFilter);
     }
 
     function onNewImagesButtonClick() {
-        debouce(newImagesFilter);
+        window.util.debouce(newImagesFilter);
     }
 
     function onDiscussedImageButtonClick() {
-        debouce(discussedImageFilter);
+        window.util.debouce(discussedImageFilter);
     }
 
     popularImagesButton.addEventListener('click', onPopularImagesButtonClick);
