@@ -5,6 +5,19 @@
     var newImagesButton = document.querySelector('#filter-new');
     var discussedImageButton = document.querySelector('#filter-discussed');
 
+    var DEBOUNCE_INTERVAL = 500;
+    
+    var lastTimeout;
+
+    function debouce(fun) {
+        if (lastTimeout) {
+            window.clearTimeout(lastTimeout);
+        }
+        lastTimeout = window.setTimeout(function() {
+            fun();
+        }, DEBOUNCE_INTERVAL)
+    }
+
     function popularImagesFilter() {
         window.viewAllImages(window.allImage);
 
@@ -55,7 +68,19 @@
         popularImagesButton.className = 'img-filters__button';
     }
 
-    popularImagesButton.addEventListener('click', popularImagesFilter);
-    newImagesButton.addEventListener('click', newImagesFilter);
-    discussedImageButton.addEventListener('click', discussedImageFilter)
+    function onPopularImagesButtonClick() {
+        debouce(popularImagesFilter);
+    }
+
+    function onNewImagesButtonClick() {
+        debouce(newImagesFilter);
+    }
+
+    function onDiscussedImageButtonClick() {
+        debouce(discussedImageFilter);
+    }
+
+    popularImagesButton.addEventListener('click', onPopularImagesButtonClick);
+    newImagesButton.addEventListener('click', onNewImagesButtonClick);
+    discussedImageButton.addEventListener('click', onDiscussedImageButtonClick)
 })();
