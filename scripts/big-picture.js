@@ -22,8 +22,7 @@
         initPictureListenres();
 
         bigPicture.classList.remove('hidden');
-        socialCommentCount.classList.add('visually-hidden');
-        commentLoader.classList.add('visually-hidden');
+        commentLoader.classList.remove('hidden');
     }
 
     function closePicture() {
@@ -40,10 +39,20 @@
         bigViewClose.removeEventListener('click', onBigViewCloseClick);
     }
 
+    function commentLoaderDisable(pictureData) {
+        var countViewComments = document.querySelectorAll('.social__comment');
+
+        if (countViewComments.length === pictureData.comments.length) {
+            commentLoader.classList.add('hidden');
+        }
+    }
+
     function showBigPicture(pictureData) {
         while (commentList.firstChild) {
             commentList.removeChild(commentList.firstChild);
         } 
+            
+        var commentView = COMMENT_STEP;
 
         var commentFragment = document.createDocumentFragment();
         
@@ -65,7 +74,38 @@
         bigPicture.querySelector('.comments-count').textContent = pictureData.comments.length;
         bigPicture.querySelector('.social__caption').textContent = pictureData.description;
 
-        openPicture();
+        openPicture();     
+        commentLoaderDisable(pictureData);   
+        commentLoader.addEventListener('click', onCommentLoaderClick);
+
+        function loadNextComments(pictureData) {
+            for (var i = commentView; i < Math.min(pictureData.comments.length, (COMMENT_STEP + commentView)); i++) {
+                var userComment = document.createElement('li');
+                userComment.classList.add('social__comment');
+                userComment.innerHTML = '<img class="social__picture" src="#" alt="Аватар комментатора фотографии" width="35" height="35"> <p class="social__text"></p>';
+    
+                userComment.querySelector('img').src = pictureData.comments[i].avatar;
+                userComment.querySelector('p').textContent = pictureData.comments[i].message;
+    
+                commentFragment.appendChild(userComment);
+            }
+    
+            commentList.appendChild(commentFragment);            
+    
+            if ((commentView + COMMENT_STEP) < pictureData.comments.length) {
+                commentView = commentView + COMMENT_STEP;
+            }
+            else {
+                commentView = pictureData.comments.length;
+            }
+    
+            // socialCommentCount.innerHTML = commentView + ' из <span class="comments-count">' + pictureData.comments.length + '</span> комментариев';
+        }
+
+        function onCommentLoaderClick() {
+            loadNextComments(pictureData);
+            commentLoaderDisable(pictureData);
+        }
     }
 
     window.showBigPicture = showBigPicture;
