@@ -73,8 +73,12 @@
         bigPicture.querySelector('.comments-count').textContent = pictureData.comments.length;
         bigPicture.querySelector('.social__caption').textContent = pictureData.description;
 
-        openPicture();     
-        commentLoaderDisable();  
+        if (commentView < pictureData.comments.length) {
+            socialCommentCount.firstChild.textContent = commentView + ' из ';
+        }
+        else {
+            socialCommentCount.firstChild.textContent = pictureData.comments.length + ' из ';
+        } 
 
         function loadNextComments() {
             for (var i = commentView; i < Math.min(pictureData.comments.length, (COMMENT_STEP + commentView)); i++) {
@@ -96,19 +100,8 @@
             else {
                 commentView = pictureData.comments.length;
             }
-    
-            // console.log(socialCommentCount.textContent[0]);
-            // console.log(commentView);
-            // socialCommentCount.textContent[0] = commentView;
-            // var str = '5 dfd';
-            // console.log(str);
-            // str = str.split(' ');
-            // console.log(str);
-            // var abc = socialCommentCount.innerHTML.split(' ');
-            // console.log(abc);
-            // abc[0] = commentView;
-            // console.log(abc);
-            // socialCommentCount.textContent;
+
+            socialCommentCount.firstChild.textContent = commentView + ' из ';
         }
 
         function commentLoaderDisable() {
@@ -121,6 +114,9 @@
 
         window.loadNextComments = loadNextComments;
         window.commentLoaderDisable = commentLoaderDisable;
+
+        openPicture();     
+        commentLoaderDisable(); 
     }
 
     window.showBigPicture = showBigPicture;
