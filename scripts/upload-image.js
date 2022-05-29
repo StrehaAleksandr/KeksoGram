@@ -81,6 +81,7 @@
 
     function onUploadImageFormSubmit(evt) {
         evt.preventDefault();
+        console.log(hashtagInput.value);
 
         hashtagInput.setCustomValidity(window.getValidationResult(hashtagInput.value));
         hashtagInput.reportValidity();
@@ -90,12 +91,12 @@
         //     closeForm();
         // });
 
-        var uploadData = new FormData(uploadImageForm);
+        // var uploadData = new FormData(uploadImageForm);
 
-        console.log(uploadData.get("hashtags"));
+        console.log(hashtagInput.value);
 
-        clearEffect();
-        closeForm();
+        // clearEffect();
+        // closeForm();
     }
 
     function onUploadImageInputEscapeKeyDown(evt) {
@@ -211,9 +212,9 @@
 
         scaleImageControlValue.value = scaleImageValue + '%';
 
-        for (var i = 0; i < imageEffects.length; i++) {
+        imageEffects.forEach(function(item, i, imageEffects) {
             viewEffect(i);
-        }
+        })
 
         initFormListenes();
     }

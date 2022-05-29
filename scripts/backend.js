@@ -27,22 +27,6 @@
         xhr.send();
     }
 
-    // function postData(data, onLoad, onError) {
-    //     var URL = 'https://22.javascript.pages.academy/kekstagram';
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.responseType = 'json';
-
-    //     xhr.addEventListener('load', function() {
-    //         onLoad(xhr.response);
-    //         if (!onLoad(xhr.response)) {
-    //             onError();
-    //         }
-
-    //         xhr.open('POST', URL);
-    //         xhr.send(data);
-    //     })
-    // }
-
     function postData(data, onLoad, onError) {
         var URL = 'https://22.javascript.pages.academy/kekstagram';
         var xhr = new XMLHttpRequest();

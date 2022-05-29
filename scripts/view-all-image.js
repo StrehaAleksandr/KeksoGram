@@ -16,23 +16,24 @@
             allPictures[i].addEventListener('click', onPictureClick);
         }
         
-        for (var i = 0; i < allPictures.length; i++) {            
+
+        allPictures.forEach(function(item, i, allPictures) {
             initPicture(i);
-        }
+        });
     }
 
     function removePictures() {
         var allViewImages = document.querySelectorAll('.picture');
 
         if (allViewImages.length !== 0) {
-            for (var i = 0; i < allViewImages.length; i++) {
+            allViewImages.forEach(function(item, i, allViewImages) {
                 allViewImages[i].remove();
-            }
+            });
         }
     }
 
     function viewAllImages(images) {
-        for (var i = 0; i < images.length; i++) {
+        images.forEach(function(item, i, images) {
             var cloneImageTemplate = imageTemplate.cloneNode(true);
 
             cloneImageTemplate.querySelector('.picture__img').src = images[i].url;
@@ -40,7 +41,7 @@
             cloneImageTemplate.querySelector('.picture__comments').textContent = images[i].comments.length;
 
             pictureFragment.appendChild(cloneImageTemplate);
-        }
+        });
 
         removePictures();
         pictures.appendChild(pictureFragment);

@@ -1,6 +1,8 @@
 'use strict';
 
 (function() {
+    var NEW_COMMENTS = 10;
+
     var popularImagesButton = document.querySelector('#filter-popular');
     var newImagesButton = document.querySelector('#filter-new');
     var discussedImageButton = document.querySelector('#filter-discussed');
@@ -21,7 +23,7 @@
             return Math.floor(min + Math.random() * (max - min));
         }
 
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < NEW_COMMENTS; i++) {
             tenRandomImages.push(newImagesArray.splice(getRandomNumber(0, newImagesArray.length), 1)[0]);
         }
 

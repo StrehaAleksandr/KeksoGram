@@ -26,6 +26,7 @@
     }
 
     function closePicture() {
+        removeComments();
         bigPicture.classList.add('hidden');
     }
 
@@ -46,11 +47,15 @@
         commentLoaderDisable();
     }
 
-    function showBigPicture(pictureData) {
+    function removeComments() {        
         while (commentList.firstChild) {
             commentList.removeChild(commentList.firstChild);
         } 
-            
+    }
+
+    function showBigPicture(pictureData) {   
+        removeComments();
+        
         var commentView = COMMENT_STEP;
 
         var commentFragment = document.createDocumentFragment();
