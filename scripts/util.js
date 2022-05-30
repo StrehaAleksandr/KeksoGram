@@ -22,9 +22,9 @@
 
     function debouce(fun) {
         if (lastTimeout) {
-            window.clearTimeout(lastTimeout);
+            clearTimeout(lastTimeout);
         }
-        lastTimeout = window.setTimeout(function() {
+        lastTimeout = setTimeout(function() {
             fun();
         }, DEBOUNCE_INTERVAL)
     }
