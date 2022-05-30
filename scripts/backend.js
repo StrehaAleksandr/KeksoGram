@@ -2,6 +2,7 @@
 
 (function() {
     function getData(onLoad, onError) {
+        var SUCSESS_STATUS = 200;
         var URL = 'https://22.javascript.pages.academy/kekstagram/data';
         var xhr = new XMLHttpRequest();
         xhr.responseType = 'json';
@@ -9,7 +10,7 @@
         xhr.open('GET', URL);
 
         xhr.addEventListener('load', function() {
-            if (xhr.status === 200) {
+            if (xhr.status === SUCSESS_STATUS) {
                 onLoad(xhr.response);
             }
             else {
@@ -35,7 +36,7 @@
         xhr.open('POST', URL);
 
         xhr.addEventListener('load', function() {
-            if (xhr.status === 200) {
+            if (xhr.status === SUCSESS_STATUS) {
                 onLoad(xhr.response);
             }
             else {
