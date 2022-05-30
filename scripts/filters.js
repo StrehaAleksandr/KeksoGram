@@ -9,9 +9,9 @@
     var discussedImageButton = document.querySelector('#filter-discussed');
 
     function activeFilter(evt) {
-        for(var i = 0; i < imageFilterButtons.length; i++) {
+        imageFilterButtons.forEach(function(item, i) {
             imageFilterButtons[i].classList.remove('img-filters__button--active');
-        }
+        })
 
         evt.target.classList.add('img-filters__button--active');
     }

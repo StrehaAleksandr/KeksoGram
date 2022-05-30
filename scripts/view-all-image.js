@@ -20,6 +20,9 @@
         allPictures.forEach(function(item, i, allPictures) {
             initPicture(i);
         });
+        // allPictures.forEach(function(picture) {
+        //     initPicture(picture);
+        // });
     }
 
     function removePictures() {
