@@ -15,7 +15,8 @@
     }
 
     function onBigPictureEscapeKeyDown(evt) {
-        window.util.isEscape(evt, removePictureListeners, closePicture);
+        removePictureListeners();
+        window.util.isEscape(evt, closePicture);
     }
 
     function openPicture() {

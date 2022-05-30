@@ -101,7 +101,7 @@
 
     function onUploadImageInputEscapeKeyDown(evt) {
         if (document.activeElement !== hashtagInput && document.activeElement !== uploadingImageComment) {
-            window.util.isEscape(evt, clearEffect, closeForm);
+            window.util.isEscape(evt, closeForm);
         }
     }
 
@@ -220,6 +220,7 @@
     }
 
     function closeForm() {
+        clearEffect();
         imageChangeForm.classList.add('hidden');
         removeFormListeners();
     }
@@ -271,14 +272,13 @@
     }
 
     function onUploadImageCancelClick() {
-        clearEffect();
         closeForm();
     }
 
     function onUploadImageCancelEnterKeyDown(evt) {
         evt.preventDefault();
 
-        window.util.isEnter(evt, clearEffect, closeForm);
+        window.util.isEnter(evt, closeForm);
     }
 
     uploadImageInput.addEventListener('change', onUploadImageInputChange);

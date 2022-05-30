@@ -5,18 +5,16 @@
 
     var lastTimeout;
     
-    function isEscape(evt, callback1, callback2) {
+    function isEscape(evt, callback) {
         if (evt.key === 'Escape') {
             evt.preventDefault();
-            callback1();
-            callback2();
+            callback();
         }
     }
 
-    function isEnter(evt, callback1, callback2) {
+    function isEnter(evt, callback) {
         if (evt.key === 'Enter') {
-            callback1();
-            callback2();
+            callback();
         }
     }
 
