@@ -18,12 +18,12 @@
         }
     }
 
-    function debouce(fun) {
+    function debouce(evt, fun) {
         if (lastTimeout) {
             clearTimeout(lastTimeout);
         }
         lastTimeout = setTimeout(function() {
-            fun();
+            fun(evt);
         }, DEBOUNCE_INTERVAL)
     }
 

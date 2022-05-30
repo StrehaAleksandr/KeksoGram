@@ -3,19 +3,26 @@
 (function() {
     var NEW_COMMENTS = 10;
 
+    var imageFilterButtons = document.querySelectorAll('.img-filters__button');
     var popularImagesButton = document.querySelector('#filter-popular');
     var newImagesButton = document.querySelector('#filter-new');
     var discussedImageButton = document.querySelector('#filter-discussed');
 
-    function popularImagesFilter() {
-        window.viewAllImages(window.allImage);
+    function activeFilter(evt) {
+        for(var i = 0; i < imageFilterButtons.length; i++) {
+            imageFilterButtons[i].classList.remove('img-filters__button--active');
+        }
 
-        popularImagesButton.className = 'img-filters__button  img-filters__button--active';
-        newImagesButton.className = 'img-filters__button';
-        discussedImageButton.className = 'img-filters__button';
+        evt.target.classList.add('img-filters__button--active');
     }
 
-    function newImagesFilter() {
+    function popularImagesFilter(evt) {
+        window.viewAllImages(window.allImage);
+
+        activeFilter(evt);
+    }
+
+    function newImagesFilter(evt) {
         var newImagesArray = window.allImage.slice();
         var tenRandomImages = [];
 
@@ -29,12 +36,10 @@
 
         window.viewAllImages(tenRandomImages);
 
-        newImagesButton.className = 'img-filters__button  img-filters__button--active';
-        popularImagesButton.className = 'img-filters__button';
-        discussedImageButton.className = 'img-filters__button';
+        activeFilter(evt);
     }
 
-    function discussedImageFilter() {
+    function discussedImageFilter(evt) {
         var sortArray = window.allImage.slice();
 
         sortArray.sort(function(a, b) {
@@ -50,23 +55,20 @@
         })
 
         window.viewAllImages(sortArray);
-
         
-        discussedImageButton.className = 'img-filters__button  img-filters__button--active';
-        newImagesButton.className = 'img-filters__button';
-        popularImagesButton.className = 'img-filters__button';
+        activeFilter(evt);
     }
 
-    function onPopularImagesButtonClick() {
-        window.util.debouce(popularImagesFilter);
+    function onPopularImagesButtonClick(evt) {
+        window.util.debouce(evt, popularImagesFilter);
     }
 
-    function onNewImagesButtonClick() {
-        window.util.debouce(newImagesFilter);
+    function onNewImagesButtonClick(evt) {
+        window.util.debouce(evt,newImagesFilter);
     }
 
-    function onDiscussedImageButtonClick() {
-        window.util.debouce(discussedImageFilter);
+    function onDiscussedImageButtonClick(evt) {
+        window.util.debouce(evt,discussedImageFilter);
     }
 
     popularImagesButton.addEventListener('click', onPopularImagesButtonClick);
