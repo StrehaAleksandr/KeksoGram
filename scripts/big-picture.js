@@ -9,6 +9,9 @@
     var commentList = bigPicture.querySelector('.social__comments');
     var commentLoader = bigPicture.querySelector('.comments-loader');
 
+    var pictureData = {};
+    var commentView = 0;
+
     function onBigViewCloseClick() {
         removePictureListeners();
         closePicture();
@@ -27,6 +30,8 @@
     }
 
     function closePicture() {
+        commentView = 0;
+
         removeComments();
         bigPicture.classList.add('hidden');
     }
@@ -80,10 +85,22 @@
         } 
     }
 
-    function showBigPicture(pictureData) {   
-        removeComments();
+    function loadNextComments() {
+        viewNewComments(pictureData.comments, commentView);
+        
+        commentView = commentView + COMMENT_STEP;
 
-        var commentView = 0;
+        viewNowComments(commentView, pictureData.comments.length);
+    }
+
+    function commentLoaderDisable() {    
+        if (commentView >= pictureData.comments.length) {
+            commentLoader.classList.add('hidden');
+        }
+    }
+
+    function drowBigPicture(pictureData) {   
+        removeComments();
 
         viewNewComments(pictureData.comments, commentView);
         
@@ -96,25 +113,13 @@
 
         viewNowComments(commentView, pictureData.comments.length);
 
-        function loadNextComments() {
-            viewNewComments(pictureData.comments, commentView);
-            
-            commentView = commentView + COMMENT_STEP;
-
-            viewNowComments(commentView, pictureData.comments.length);
-        }
-
-        function commentLoaderDisable() {    
-            if (commentView >= pictureData.comments.length) {
-                commentLoader.classList.add('hidden');
-            }
-        }
-
-        window.loadNextComments = loadNextComments;
-        window.commentLoaderDisable = commentLoaderDisable;
-
         openPicture();     
         commentLoaderDisable(); 
+    }
+
+    function showBigPicture(data) {
+        pictureData = data;
+        drowBigPicture(pictureData);
     }
 
     window.showBigPicture = showBigPicture;

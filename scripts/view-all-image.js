@@ -10,15 +10,15 @@
 
         function initPicture(picture) {
             function onPictureClick() {
-                // var index = // read data-attr
+                var index = picture.querySelector('.picture__img').dataset.index;
                 window.showBigPicture(imagesData[index]);
             }
 
             picture.addEventListener('click', onPictureClick);
         }
         
-        allPictures.forEach(function(picture, i) {
-            initPicture(picture, i);
+        allPictures.forEach(function(picture) {
+            initPicture(picture);
         });
     }
 
@@ -37,9 +37,9 @@
             var cloneImageTemplate = imageTemplate.cloneNode(true);
 
             cloneImageTemplate.querySelector('.picture__img').src = currentPictureData.url;
+            cloneImageTemplate.querySelector('.picture__img').dataset.index = position;
             cloneImageTemplate.querySelector('.picture__likes').textContent = currentPictureData.likes;
             cloneImageTemplate.querySelector('.picture__comments').textContent = currentPictureData.comments.length;
-            // add data-attr
 
             pictureFragment.appendChild(cloneImageTemplate);
         });

@@ -79,24 +79,32 @@
     var currentEffect = Effect.none;
     var pinLeftCoord;
 
+    var isValidity = true;
+
     function onUploadImageFormSubmit(evt) {
         evt.preventDefault();
-        console.log(hashtagInput.value);
 
-        hashtagInput.setCustomValidity(window.getValidationResult(hashtagInput.value));
+        console.log(isValidity);
+
+        if(isValidity) {
+            // window.backend.postData(new FormData(uploadImageForm), function(response){
+            //     clearEffect();
+            //     closeForm();
+            // });   
+            console.log('валидно');
+
+            clearEffect();
+            closeForm();
+        }
+
+
+    }
+
+    function hashtagValidation(evt) {
+        var result = window.getValidationResult(evt.target.value);
+        isValidity = !result.lenght;
+        hashtagInput.setCustomValidity(result);
         hashtagInput.reportValidity();
-
-        // window.backend.postData(new FormData(uploadImageForm), function(response){
-        //     clearEffect();
-        //     closeForm();
-        // });
-
-        // var uploadData = new FormData(uploadImageForm);
-
-        console.log(hashtagInput.value);
-
-        // clearEffect();
-        // closeForm();
     }
 
     function onUploadImageInputEscapeKeyDown(evt) {
@@ -161,7 +169,7 @@
         document.addEventListener('mouseup', onMouseUp);
     }
 
-    function viewEffect(index) {
+    function viewEffect(effect) {
         function onImageEffectClick(evt) {
             var effectName = evt.target.value;
             currentEffect = Effect[effectName];
@@ -183,7 +191,7 @@
 
         }
 
-        imageEffects[index].addEventListener('click', onImageEffectClick);
+        effect.addEventListener('click', onImageEffectClick);
     }
 
     function onScaleImageSmallerClick(evt) {
@@ -212,8 +220,8 @@
 
         scaleImageControlValue.value = scaleImageValue + '%';
 
-        imageEffects.forEach(function(item, i, imageEffects) {
-            viewEffect(i);
+        imageEffects.forEach(function(effect) {
+            viewEffect(effect);
         })
 
         initFormListenes();
@@ -233,6 +241,7 @@
         effectPin.addEventListener('mousedown', onEffectPinMouseDown);
         uploadImageCancel.addEventListener('click', onUploadImageCancelClick);   
         uploadImageCancel.addEventListener('keydown', onUploadImageCancelEnterKeyDown);
+        hashtagInput.addEventListener('input', hashtagValidation);
     }
 
     function removeFormListeners() {
@@ -243,6 +252,7 @@
         effectPin.removeEventListener('mousedown', onEffectPinMouseDown);
         uploadImageCancel.removeEventListener('click', onUploadImageCancelClick);   
         uploadImageCancel.removeEventListener('keydown', onUploadImageCancelEnterKeyDown);
+        hashtagInput.removeEventListener('input', hashtagValidation);
     }
 
     function onUploadImageInputChange() {
